@@ -367,4 +367,134 @@
 #         print('所以是：\033[33;1m你输了\033[0m')
 #         jqwin_cs += 1
 # print('总共猜了%s局，你赢%s局，机器赢%s局' % (cq_cs,rwin_cs,jqwin_cs))
-###
+###29-文件对象基础操作---待续待续
+##文件操作的三个步骤：打开、读写、关闭
+# f = open('/tmp/passwd')  #默认以r方式打开
+# data1 = f.read()         #read()默认把所有内容读取出来
+# print(data1)
+# data2 = f.read()        #前面一步已经将指针指向末尾了，再读就没有数据了
+# print(data2)
+# f.close()
+#
+# f.read(4)       #读取4个字节
+# a = f.readline()      #读取一行，读到换行符结束
+# b = f.readlines()      #把每一行数据读出来，放到列表中
+#####30--拷贝文件1
+
+
+#####31--拷贝文件2
+# import sys
+#
+# def copy(src_fname,dst_fname):
+#     src_fobj = open(src_fname,'rb')
+#     dst_fobj = open(dst_fname,'wb')
+#
+#     while True:
+#         data = src_fobj.read(4096)
+#         if not data:
+#             break
+#         dst_fobj.write(data)
+#     src_fobj.close()
+#     dst_fobj.close()
+#
+# if __name__ == '__main__':
+#     copy(sys.argv[1],sys.argv[2])
+######32-位置参数
+# import  sys
+# print(sys.argv[1],sys.argv[2])      #sys.argv是sys模块里面的argv列表
+
+# python3 position_args.py
+# python3 position_args.py 10          #执行时带参数
+# python3 position_args.py 10 bob       #执行时带两个参数
+
+#####33-函数的应用，斐波那契数列
+# import random,sys
+#
+# def gen_fib():
+#     alist = [0, 1]
+#     aint = int(input('请输入数字：'))
+#     for i  in  range(aint - 2):
+#         alist.append(alist[-1]+alist[-2])
+#     return alist
+# mylist=gen_fib()
+# print(mylist)
+
+####34-函数拷贝文件
+
+
+####35-函数-九九乘法表
+# def js():
+#     cd = int(input('请输入长度'))
+#     for i in range(cd+1):
+#         for j in range(1,i+1):
+#             print( '%s*%s=%s ' % (i,j,i*j),end='')
+#         print()
+# if __name__ == '__main__':
+#     a = js()
+####36-模块基础
+
+
+
+
+###47--列表练习：模拟栈操作
+import sys
+
+list = []
+
+def rz():
+    print('rz')
+    itm = input('>').strip()
+    if itm:
+        list.append(itm)
+def cz():
+    print('cz')
+    if list:
+        print('弹出：%s' % list.pop())
+def cx():
+    print(list)
+
+def manu():
+    xz_lb='''0:入栈
+1：出栈
+2：查询
+3：退出
+请选择'''
+    while True:
+        xz = input(xz_lb).strip()
+        if xz not in  ['0','1','2','3']:
+            print('输入无效，请重新输入：')
+            continue
+        if xz == '3':
+            print('退出')
+            break
+        def_list = {'0':rz,'1':cz,'2':cx}
+        if xz in def_list:
+            def_list[xz]()
+
+if __name__ == '__main__':
+    manu()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

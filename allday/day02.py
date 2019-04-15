@@ -420,12 +420,9 @@
 # print([10 + i for i in range(5)])       #
 # print([10 + i for i in range(1,5)])     #[11, 12, 13, 14]
 # print([10 + i for i in range(1,6) if i % 2 == 1]) #[11, 13, 15]  #满足判断条件才保留
-###ip地址
+###ip地址##########
 # print(['192.168.1.%s' % 1])
 # print(['192.168.1.%s' % i  for i in range(1,10)])
-
-# for i in
-#
 #
 #
 #####文件#######################################################
@@ -597,7 +594,6 @@
 # import sys
 #
 # print(sys.argv)     #argv是sys位置函数模块的参数列表,将位置参数存到该列表中
-
 ###[root@room9pc01 day02]# python3 day02.py
 ###['day02.py']
 ###[root@room9pc01 day02]# python3 day02.py 123 456
@@ -663,7 +659,7 @@
 ###bcd17d976578c12c74e537f7e64e8375  test2.py
 
 ##所有字母大小写+所有数字##########
-import string  # 导入string这个模块
+# import string  # 导入string这个模块
 # print(string.digits)  # 输出包含数字0~9的字符串
 # print(string.ascii_letters)  # 包含所有字母(大写或小写)的字符串
 # print(string.ascii_lowercase)  # 包含所有小写字母的字符串
@@ -702,11 +698,10 @@ import string  # 导入string这个模块
 ######模块
 ####1文件:是python从物理上组织代码的形式,
 ####2模块:是python从逻辑上组织代码的形式,
-# hi = 'heelo zdd'
+# hi = 'hello zdd'
 # def pstar(n=30):
 #     print('$' * n)
-
-####实际执行如下########################
+###实际执行如下#########
 # ###[root@room9pc01 tmp]# cd /root/PycharmProjects/day02/
 # ###[root@room9pc01 day02]# python3
 # ###>>> import day02                   #python文件全名为:day02.py
@@ -720,7 +715,7 @@ import string  # 导入string这个模块
 # ###>>>
 #####创建模块
 ###导入模块
-###使用import导入就会执行一遍语句
+#使用import导入就会执行一遍语句
 # hi = 'heelo zdd'
 # def pstar(n=30):
 #     print('$' * n)
@@ -757,12 +752,12 @@ import string  # 导入string这个模块
 # if __name__ == 'day02':
 #     pstar()
 #     pstar(40)
-###[root@room9pc01 day02]# python3
-###>>> import day02                 #如果是import调用才执行
-###$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-###$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+# ##[root@room9pc01 day02]# python3
+# ##>>> import day02                 #如果是import调用才执行
+# $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+# $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
-######随机密码###########
+#####随机密码###########
 # from random import choice
 # from string import ascii_letters,digits    #/usr/local/lib/python3.6/string.py
 #
@@ -787,7 +782,7 @@ import string  # 导入string这个模块
 # shutil.copyfileobj(file_a,file_b)
 # file_a.close()
 # file_b.close()
-####实际结果
+# ####实际结果
 # [root@room9pc01 tmp]# cat /etc/issue
 # \S
 # Kernel \r on an \m
@@ -795,21 +790,21 @@ import string  # 导入string这个模块
 # [root@room9pc01 tmp]# cat /tmp/issue1
 # \S
 # Kernel \r on an \m
-
-###2,shutil.copy 拷贝文件,  #常用
+#
+# ###2,shutil.copy 拷贝文件,  #常用
 # import shutil
 # shutil.copy('/etc/issue.net','/tmp')
-
+#
 # [root@room9pc01 tmp]# ls /tmp/issue*
 # /tmp/issue1  /tmp/issue2
-
-###3,shutil.copy2()       #相当于cp -p
-###4,shutil.move()        #mv文件     #常用
+#
+# ###3,shutil.copy2()       #相当于cp -p
+# ###4,shutil.move()        #mv文件     #常用
 # import shutil
 # shutil.move('/tmp/issue.net','/hahahahah')
-
-###5,shutil.remtree()   #rm -rf  但是只能删除目录,不能删除文件.常用
-import shutil
+#
+# ###5,shutil.remtree()   #rm -rf  但是只能删除目录,不能删除文件.常用
+# import shutil
 
 
 ######变量复制,多重赋值#################
@@ -823,17 +818,19 @@ import shutil
 # print(aa,bb)
 # aaa,bbb = [10,20]
 # print(aaa,bbb)
+# a, b = b, a  # 互换a和b的值
+# print( a,b)
 ######合法标识符########################
-
 #######关键字#########################
 # import keyword          #关键字列表和iskeyword函数模块
 # print(keyword.kwlist)
-# print(keyword.iskeyword('pass'))
+# print(keyword.iskeyword('pass'))                  #输出:True,说明pass是关键字
+# print(keyword.iskeyword('adp'))                   #输出:False,说明adp不是关键字
 ######内建########################
 ##内建不要被覆盖
 
 ###模块布局###########
-#! /usr/bin/env python
+# ! /usr/bin/env python
 # "this is a test module"
 # import sys,os
 #
@@ -865,18 +862,18 @@ import shutil
 #     content = [line + '\n' for line in content] #将content列表所有value添加一个\n
 #     wfile(fname,content)        #将content的内容写入到名为fname的文件中,没有则创建
 
-###########
+##########
 # alist = ['tom','bob','jerry','alice']
-
+#
 # for i_1 in [0,1,2,3]:
 #     print('%s : %s' % (i_1,alist[i_1]))
-
+#
 # for i_2 in range(4):
 #     print('%s : %s' % (i_2, alist[i_2]))
-
+#
 # for i_3 in range(len(alist)):
 #     print('%s : %s' % (i_3, alist[i_3]))
-
+#
 # print(list(enumerate(alist)))   #[(0, 'tom'), (1, 'bob'), (2, 'jerry'), (3, 'alice')]
 #
 # for i_4 in enumerate(alist):
@@ -889,14 +886,14 @@ import shutil
 # # 1:bob
 # # 2:jerry
 # # 3:alice
-####
+# ###
 # alist = ['tom','bob','jerry','alice']
 # print(reversed(alist))          #输出一个文件:<list_reverseiterator object at 0x7f2e1c9274e0>
 # print(list(reversed(alist)))    #翻转，但是列表本身不变,输出['alice', 'jerry', 'bob', 'tom']
 # print(alist.reverse())          #翻转，改变列表本身
-
-# print(sorted(alist))              #排序，但是列表本身不变，输出['alice', 'bob', 'jerry', 'tom']
-# print(list(sorted(alist)     #排序，但是列表本身不变，输出['alice', 'bob', 'jerry', 'tom']
+#
+# print(sorted(alist))            #排序，但是列表本身不变，输出['alice', 'bob', 'jerry', 'tom']
+# print(list(sorted(alist)        #排序，但是列表本身不变，输出['alice', 'bob', 'jerry', 'tom']
 # print(alist.sort())             #排序，改变列表本身
 
 
@@ -922,6 +919,7 @@ import shutil
 #
 # if __name__ == '__main__':
 #     print(check_idt(sys.argv[1]))
+
 ####执行之后的结果##############
 # [root@room9pc01 day02]# python3 day02.py  asdf
 # asdf 是合法的标识符
@@ -933,29 +931,28 @@ import shutil
 ####字符串格式化 ###########
 ###1,基础样式
 # print('%s' % 'bob')
-#
+
 # print('%s is %s years old' % ('bob',20))  #bob is 20 years old
 # print('%s is %d years old' % ('bob',20))   #s用d代替,为有符号的十进制:bob is 20 years old
-#
+
 # print('%10s%8s' % ('name','age'))   #name点10个宽度,age占8个宽度
 # print('%10s%8s' % ('zdd',20))
 # print('%-10s%-8s' % ('zdd',20))     #加-号
 #
-# ###了解
+###了解
 # print('%#o' % 10)   #8进制
 # print('%#x' % 10)   #16进制
 # print('%f' % (5 / 3))   #f为浮点数
 # print('%5.2f' % (5 / 3))
 # print('%+d' % 10)       #正数前加+号
 # print('%+d' % -10)      #负数不需要加,就是-号
-
-###format函数####位置参数###########
+#
+# ###format函数####位置参数###########
 # print('{} is {} years old'.format('bob',20))    #bob is 20 years old
 # print('{0} is {1} years old'.format(20,'bob'))  #20 is bob years old
 # print('{1} is {0} years old'.format(20,'bob'))  #bob is 20 years old
-# # print('{1:<} is {0} '.format(20,'bob'))
-
-###创建用户##########
+# print( '{1:<10}:{0:>8}'.format(20, 'bob'))      #位置1的bob左对齐点10个宽度)
+# ###创建用户##########
 # import sys
 # import subprocess
 # from randpass2 import gen_pass
@@ -972,7 +969,7 @@ import shutil
 #         'echo %s | passwd --stdin %s' % (passwd,user),
 #         shell=True
 #     )
-#
+
 #     with open(fname,'a') as fobj:
 #         fobj.write(info)
 #
@@ -983,23 +980,54 @@ import shutil
 #     adduser(username,pwd,filename)
 
 #######原始字符串#########################################
-win_path = 'c:\temp'
-print(win_path)             #输出c:	emp
-
-win_path = 'c:\\temp'
-print(win_path)             #输出c:\temp
-
-wpath = r'c:\temp'          #原始字符串,字符串中的字符是本身含义  #字符串使用次数特别多
-print(wpath)                #输出c:\temp
-
-
-
-
-
-
-
-
-
-
-
-
+# win_path = 'c:\temp'
+# print(win_path)             #输出c:	emp
+#
+# win_path = 'c:\\temp'
+# print(win_path)             #输出c:\temp
+#
+# wpath = r'c:\temp'          #原始字符串,字符串中的字符是本身含义  #字符串使用次数特别多
+# print(wpath)                #输出c:\temp
+###字符串常用办法#####
+###1、去除空白字符
+# s1 ='  hello world\n'
+# print(s1)
+# print(s1.strip())           #去除两边的空白字符，包括换行
+# print(s1.lstrip())          # 去除左边空白字符
+# print(s1.rstrip())          #去除右边空白字符，包括换行
+###2、切割字符###
+# s2 = 'hello world ni hao'
+# print(s2)
+# print(s2.split())
+# s3 = 'hello-world-ni-hao'
+# print(s3.split())
+# print(s3.split('-'))
+###3、拼接字符####
+# slist = ['hello','world','in','hao']
+# print(slist)
+# print(''.join(slist))
+# print(' '.join(slist))
+# print('--'.join(slist))
+###4、对齐###
+# s2 = 'hello world ni hao'
+# print(s2.center(50))
+# print(s2.center(50),'-')
+# print(s2.center(50,'-'))
+# print(s2.rjust(50,'-'))
+# print(s2.ljust(50,'-'))
+# ###5判断开头结尾
+# s2 = 'hello world ni hao'
+# print(s2.startswith('h'))
+# print(s2.startswith('he'))
+# print(s2.startswith('hea'))
+# print(s2.endswith('o'))
+# print(s2.endswith('ao'))
+# print(s2.endswith('sao'))
+####格式化输出#####自己写的
+# a = ['nihao','zdd']
+# width = 48
+# # contents = get_contents()
+# print('+%s+' % ('*' * 48))
+# for line in a:
+#     print('+{:^48}+'.format(line))
+# print('+%s+' % ('*' * 48))

@@ -193,15 +193,178 @@
 # else:
 #     print('猜对了')
 # print('结果是:%s' % num)
-######14-成绩分类1
-cj = int(input('请输入成绩:'))
-if cj > 90:
-    print('优秀')
-elif cj > 80:
-    print('好')
-elif cj > 70:
-    print('良')
-elif cj > 60:
-    print('及格')
-else:
-    print('冒搞手')
+######14-成绩分类1############
+# cj = int(input('请输入成绩:'))
+# if cj > 90:
+#     print('优秀')
+# elif cj > 80:
+#     print('好')
+# elif cj > 70:
+#     print('良')
+# elif cj > 60:
+#     print('及格')
+# else:
+#     print('冒搞手')
+#####15成绩分类2##################
+# def cjfl(cj):
+#     if cj >= 90:
+#         fl = '优秀'
+#     elif 80 <= cj < 90:
+#         fl = '好'
+#     elif 70 <= cj < 90:
+#         fl = '还行'
+#     elif 60 <= cj < 70:
+#         f1 = '及格'
+#     else:
+#         fl = '冒搞手哒'
+#     return fl
+# fs = int(input('请输入您的成绩：'))
+# a = cjfl(fs)
+# print(a)
+#####16--石头剪刀布游戏###############
+# import random
+# all_cq = ['石头','剪刀','布']
+# all_win = (['石头','剪刀'],['剪刀','布'],['布','石头'])
+# c_jq = random.choice(all_cq)
+# c_xz = '''0/石头
+# 1/剪刀
+# 2/布
+# 请选择（0/1/2）'''
+# c_ren1 = int(input(c_xz))
+# c_ren2 = all_cq[c_ren1]
+# if [c_ren2,c_jq] in all_win:
+#     print('\033[31;1m你赢了\033[0m')
+# elif c_ren2 == c_jq:
+#     print('\033[32;1m平局\033[0m')
+# else:
+#     print('\033[31;1m你输了\033[0m')
+# print('你出的是:%s  机器出的是:%s' % (c_ren2,c_jq))
+#####18--猜数，直到猜对
+# import random
+# sz_sj = random.randint(1,100)
+#
+# while True:
+#     sz_rc = int(input('请输入数字：'))
+#     if sz_rc > sz_sj:
+#         print('大了')
+#     elif sz_rc < sz_sj:
+#         print('小了')
+#     else:
+#         print('对了')
+#         break
+#####19--猜数字，五次机会#############
+# import random
+# sz_sj = random.randint(1,100)
+# sz_cs = 0
+# sz_d  = 0
+# while sz_cs < 5:
+#     sz_rc = int(input('请输入数字：'))
+#     sz_cs += 1
+#     if sz_rc > sz_sj:
+#         print('大了')
+#     elif sz_rc < sz_sj:
+#         print('小了')
+#     else:
+#         print('对了')
+#         break
+# print('总共猜了:%s次' % sz_cs)
+#####20-while循环，累加至100##############
+# numb = 0
+# cs   = 0
+# while cs < 100:
+#     cs += 1
+#     numb = numb + cs
+# print(numb)
+######21-while-break
+###--break是结束循环，break之后、循环体内代码不再执行。
+######22-while-continue###
+###--continue是跳过本次循环剩余部分，回到循环条件处。
+##计算100以内偶数之和
+# sz_sum = 0
+# sz_counter = 0
+# while sz_counter < 4:
+#     sz_counter += 1
+#     if sz_counter % 2 == 1:
+#         continue          #凡是遇到基数就不执行下面的加法运算，跳到while判断位置
+#     sz_sum = sz_sum + sz_counter
+# print(sz_sum)
+####23-for循环遍历数据对象
+# astr = 'hello'
+# alist = [10,20,30]
+# atuple = ('zdd1','bob','tom','alice')
+# adict = {'name':'john','age':23}
+# for ch in astr:
+#     print(ch)   #每行输出一个astr中的一个单词，
+# for i in alist:
+#     print(i)    #每行输出一个alist中的一个value
+# for name in  atuple:
+#     print(name)     #每行输出一个atuple中的一个名字
+# for key in adict:
+#     print('%s:%s' % (key,adict[key]))    #输出所有的键
+####24-range 用法及数字累加#############
+# print(range(10))            #输出range(0, 10)
+# print(list(range(5)))       #输出[0, 1, 2, 3, 4]
+# print(list(range(1,5)))     #输出[1, 2, 3, 4]
+# print(list(range(1,5,2)))   #输出[1, 3] 从1开始，5结束，每隔一个输出一个，步长为2，不包括结束位5
+# print(list(range(10,0)))    #输出[]
+# print(list(range(10,0,-1))) #输出[10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+# #100以内的总和
+# cont = 0
+# a = 0
+# for i in range(1,101):
+#     cont += 1
+#     a = a + cont
+# print(a)
+# ####25斐波那契数列
+# a = [0,1]
+# b = int(input('请输入数字个数'))
+# for i in range(b-2):
+#   a.append(a[-1] + a[-2])
+# print(a)
+#####26-九九乘法表
+# cs = int(input('乘法表范围'))
+# for i in range(1,cs+1):
+#     for n in range(1,i+1):
+#         print('%s*%s=%s ' % (i,n,i*n),end='')
+#     print()
+# # print(list(range(1,5)))
+# # print(list(range(1,2)))
+#####27-列表解析
+# print([10 + 5 for  i  in  range(5)])   #输出：[15, 15, 15, 15, 15]，#10+5这个计算5次，for循环了5次
+# print([10 + i for  i  in  range(5)])   #输出：[10, 11, 12, 13, 14]  #10+i,i来自于后面的for循环
+# print([10 + i for  i  in  range(2,5)])  #输出：[12, 13, 14]  #10+i,i来自于后面的for循环
+##通过if过滤，满足if条件的才参与10+i的运算
+# print([10 + i for i in range(1,11) if i % 2 == 0]) #输出[12, 14, 16, 18, 20]
+# print([10 + i for i in range(1,11) if i % 2 == 1])  #输出[11, 13, 15, 17, 19]
+# print(['192.168.1.%s' %  i for i in range(1,10) if i > 8]) #输出['192.168.1.9']
+# a =  ['192.168.1.%s' %  i for i in range(1,10) if i > 8]
+# print(a)
+#####三局两胜的石头剪刀布
+# import random
+# all = ['石头','剪刀','布']
+# all_win = [['石头','剪刀'],['剪刀','布'],['布','石头']]
+# xz='''
+# 0/石头
+# 1/剪刀
+# 2/布
+# 请选择数字出拳：'''
+# cq_cs = 0
+# rwin_cs = 0
+# jqwin_cs =0
+# cq_qk = []
+# while  jqwin_cs < 3 and rwin_cs <3:
+#     cq_cs += 1
+#     cq_jq = random.choice(all)
+#     id = int(input(xz))
+#     cq_rc = all[id]
+#     print('机器出的是：%s 你出的是：%s ' % (cq_jq, cq_rc))
+#     if [cq_jq,cq_rc] in all_win:
+#         print('所以是：\033[31;1m你赢了\033[0m')
+#         rwin_cs += 1
+#     elif cq_jq == cq_rc:
+#         print('所以是：\033[32;1m平局\033[0m')
+#     else:
+#         print('所以是：\033[33;1m你输了\033[0m')
+#         jqwin_cs += 1
+# print('总共猜了%s局，你赢%s局，机器赢%s局' % (cq_cs,rwin_cs,jqwin_cs))
+###
