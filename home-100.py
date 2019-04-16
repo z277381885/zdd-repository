@@ -437,42 +437,42 @@
 
 
 ###47--列表练习：模拟栈操作
-import sys
-
-list = []
-
-def rz():
-    print('rz')
-    itm = input('>').strip()
-    if itm:
-        list.append(itm)
-def cz():
-    print('cz')
-    if list:
-        print('弹出：%s' % list.pop())
-def cx():
-    print(list)
-
-def manu():
-    xz_lb='''0:入栈
-1：出栈
-2：查询
-3：退出
-请选择'''
-    while True:
-        xz = input(xz_lb).strip()
-        if xz not in  ['0','1','2','3']:
-            print('输入无效，请重新输入：')
-            continue
-        if xz == '3':
-            print('退出')
-            break
-        def_list = {'0':rz,'1':cz,'2':cx}
-        if xz in def_list:
-            def_list[xz]()
-
-if __name__ == '__main__':
-    manu()
+# import sys
+#
+# list = []
+#
+# def rz():
+#     print('rz')
+#     itm = input('>').strip()
+#     if itm:
+#         list.append(itm)
+# def cz():
+#     print('cz')
+#     if list:
+#         print('弹出：%s' % list.pop())
+# def cx():
+#     print(list)
+#
+# def manu():
+#     xz_lb='''0:入栈
+# 1：出栈
+# 2：查询
+# 3：退出
+# 请选择'''
+#     while True:
+#         xz = input(xz_lb).strip()
+#         if xz not in  ['0','1','2','3']:
+#             print('输入无效，请重新输入：')
+#             continue
+#         if xz == '3':
+#             print('退出')
+#             break
+#         def_list = {'0':rz,'1':cz,'2':cx}
+#         if xz in def_list:
+#             def_list[xz]()
+#
+# if __name__ == '__main__':
+#     manu()
 
 
 

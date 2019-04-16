@@ -1191,9 +1191,15 @@
 # print(bdict)
 ###2访问字典
 # adict = dict(['ab',['name','tom'],('age',22)])
-# # for key in adict:
-# #     print('$s : $s' % (key, adict[key]))
+# print(adict)
+# for key in adict:
+#     print('%s : %s' % (key,adict[key]))
+# print(adict['name'])        #tom
 #
+# print('tom' in adict)           #False
+# print('name' in adict)          #True
+
+
 # ##3更新字典
 # 字典的kye都是唯一的,不重复的,字典的key必须是不可变类型
 # adict = dict(['ab',['name','tom'],('age',22)])
@@ -1479,5 +1485,357 @@
 # if __name__ == '__main__':
 #     set_age2('杨晨', 24)
 
-#####
+#####OS模块
 
+
+###pickle模块
+
+###记账本程序
+# import time,os,pickle
+#
+# def sr():           #经过cmkds[xz_2](fname)传参fname到这
+#     print('sr')
+#     amount = int(input('收入金额:'))
+#     comment = input('说明')
+#     date = time.strftime('%Y-%m-%d')    #获取当前日期
+#     with open(fnam,'rb') as fobj:
+#         data = pickle.load(fobj)            #从文件中取出全部记录
+#         balance = data[-1][-2] + amount     #文件最后一行的倒数第2项是余额
+#
+#     line = [date,amount,0,balance,comment]
+#     data.apend(line)                        #把最新记录加入到大列表中
+#
+#     with open(fname,'wb') as fobj:
+#         pickle.dump(data,fobj)              # 把大列表写到文件
+#
+#
+# def zc():
+#     print('zc')
+#
+# def cx():
+#     print(cx)
+#
+# def show_menu():
+#     xz_1 = '''0:收入
+# 1:支出
+# 2:查询
+# 3:退出
+# 请选择相应操作:'''
+#     cmds = {'0': sr, '1': zc, '2': cx}
+#
+#     fname = 'jzb.data'
+#     if not os.path.exists(fname):
+#         date = time.strftime('%Y-%m-%d')
+#         data = [
+#             [ date,0,0,10000,'init data']
+#         ]
+#         with open(fname,'wb') as fobj:
+#             pickle.dump(data,fobj)
+#
+#     while True:
+#
+#         xz_2 = input(xz_1).strip()
+#         if xz_2 == '3':
+#             print('选择了退出')
+#             exit()
+#
+#         if xz_2 not in ['0','1','2']:
+#             print('无效输入')
+#
+#         cmkds[xz_2](fname)
+#
+# if __name__ == '__main__':
+#     show_menu()
+
+##函数
+# def myfunc(name, age=23):
+#     pass
+# #函数中的name就被称作位置参数，age被称作关键字参数
+#
+# def get_info(name, age):
+#     print('%s is %s years old' % (name, age))
+# #get_info()                                  # error，参数个数不足
+# #get_info('tom', 20, 30)                     # error, 参数个数太多
+# get_info('tom', 20)                         # OK
+# get_info(20, 'tom')                         # OK，但是语义不对
+# get_info(age=20, name='tom')                # OK
+# #get_info(age=20, 'tom')                     # error, 位置参数必须在关键字参数前
+# #get_info(20, name='tom')                    # error, name得到了多个值
+# get_info('tom', age=20)                     # OK
+
+##函数参数组
+# def func1(*args): #args前面的一个*号,表明args是元组,传参会把参数放入元组
+#     print(args)
+#
+# def func2(**kwargs):  #kwargs前面两个**号,表名kwargs是字典
+#     print(kwargs)
+#
+# if __name__ == '__main__':
+#     func1()
+#     func1('hao')
+#     func1('zdd',123)
+#     func2()
+#     func2(name='tom',age=20)
+
+##加*号
+# print('abc')
+# print(*'abc')
+# ##print(**'abc')            #错误
+# print(*[10,20,30])
+# print(*(10,20,30))
+
+
+##字典加两个**号
+# def info(name,age):
+#     print('%s:%s' % (name,age))
+#
+# if __name__ == '__main__':
+#     info(**{'name':'tom','age':20})
+#
+# info(name='tom',age=20)
+
+# ###简单的加减法数学游戏
+# import random
+#
+# def sf():
+#     nums = [random.randint(1,100) for i in range(2)]
+#     nums.sort(reverse=True)         #降序排列,默认升序
+#     op = random.choice('+-')
+#     a = 0
+#     while a < 3:
+#         a += 1
+#         if op == '+':
+#             result = nums[0] + nums[1]
+#         else:
+#             result = nums[0] - nums[1]
+#
+#         prompt = '%s %s %s = ' % (nums[0], op , nums[1])
+#         answer = int(input(prompt))
+#
+#         if answer == result:
+#             print('对')
+#             break
+#         else:
+#             print('错')
+#     print('结果是:%s' % result)
+# def main():
+#     while True:
+#         print('开始测智商了')
+#         sf()
+#         y_n = input('请选择是否继续(y/n)?').strip()[0]
+#         if y_n in 'nN':
+#             print('\n测试结束')
+#             break
+#
+# if __name__ == '__main__':
+#     main()
+
+#
+# ###简单的加减法数学游戏:增加了错误收集try
+# import random
+#
+# def add(x,y):
+#     return x+y
+# def sub(x,y):
+#     return x-y
+#
+# def exam():
+#     cmds = {'+':add,'-':sub}        #定义函数选择字典
+#     nums = [random.randint(1,100) for i in range(2)]    #随机生成两个数
+#     nums.sort(reverse=True)                             #重新排列,默认升序,这是降序
+#     op = random.choice('+-')                            #随机选择是+法还是-法
+#     result = cmds[op](*nums)                #将列表拆开,传参到add函数或者sub函数,进行运算
+#     prompt = '%s %s %s = ' % (nums[0],op,nums[1])   #固定格式,第一个数 +/- 第二个数 =
+#     counter = 0                                     #用作循环次数计数
+#
+#     while counter < 3:
+#         try:
+#             answer = int(input(prompt)) #用户输入答案时捕获错误
+#         except:                         #捕获所有错误操作,不按程序答对,或者答错三次不结束,不推荐
+#             print('非法操作,请继续')
+#             continue
+#
+#         if answer == result:            #如果输入的等于运算返回的结果
+#             print('答对了')
+#             break
+#         print('不对哦')                  #如果输入的不等于算返回的结果,则执行
+#         counter +=1
+#     else:
+#         print('%s%s' % (prompt,result))  #输出上面的固定格式和结果
+#
+# def main():
+#     while True:
+#         print('开始测智商了')
+#         exam()                          #调用函数
+#         try:
+#             y_n = input('请选择是否继续(y/n)?').strip()[0] #输入是否继续时捕获错误
+#         except IndexError:
+#             continue
+#         except (KeyboardInterrupt,EOFError):    #ctrl+c 与 ctrl+d 的错误
+#             y_n = 'n'
+#
+#         if y_n in 'nN':
+#             print('\n测试结束')
+#             break
+#
+# if __name__ == '__main__':
+#     main()
+
+####匿名函数####################
+
+###简单的加减法数学游戏--匿名函数lambda方式
+# import random
+#
+# def exam():
+#     cmds = {'+':lambda x,y:x+y,'-':lambda x,y:x-y,'*':lambda x,y:x*y}     #用匿名函数代替运算
+#     nums = [random.randint(1,100) for i in range(2)]    #随机生成两个数
+#     nums.sort(reverse=True)                             #重新排列,默认升序,这是降序
+#     op = random.choice('+-*')                            #随机选择是+法还是-法
+#     result = cmds[op](*nums)                #将列表拆开,传参到add函数或者sub函数,进行运算
+#     prompt = '%s %s %s = ' % (nums[0],op,nums[1])   #固定格式,第一个数 +/- 第二个数 =
+#     counter = 0                                     #用作循环次数计数
+#
+#     while counter < 3:
+#         try:
+#             answer = int(input(prompt)) #用户输入答案时捕获错误
+#         except:                         #捕获所有错误操作,不按程序答对,或者答错三次不结束,不推荐
+#             print('非法操作,请继续')
+#             continue
+#
+#         if answer == result:            #如果输入的等于运算返回的结果
+#             print('答对了')
+#             break
+#         print('不对哦')                  #如果输入的不等于算返回的结果,则执行
+#         counter +=1
+#     else:
+#         print('%s%s' % (prompt,result))  #输出上面的固定格式和结果
+#
+# def main():
+#     while True:
+#         print('开始测智商了')
+#         exam()                          #调用函数
+#         try:
+#             y_n = input('请选择是否继续(y/n)?').strip()[0] #输入是否继续时捕获错误
+#         except IndexError:
+#             continue
+#         except (KeyboardInterrupt,EOFError):    #ctrl+c 与 ctrl+d 的错误
+#             y_n = 'n'
+#
+#         if y_n in 'nN':
+#             print('\n测试结束')
+#             break
+#
+# if __name__ == '__main__':
+#     main()
+
+#####filter函数(高阶函数)
+# from random import randint
+#
+# def func1(x):
+#     return x % 2
+#
+# if __name__ == '__main__':
+#     nums = [randint(1,100) for i in range(10)]
+#     print(nums)
+#
+#     result = filter(func1,nums)
+#     print(list(result))
+#
+#     result2 = filter(lambda x: x % 2,nums)
+#     print(list(result2))
+#
+#     result3 = filter(lambda x: not x % 2,nums)
+#     print(list(result3))
+
+
+#############################
+####map函数
+# from random import randint
+#
+# def func1(x):
+#     return x + 2
+#
+# if __name__ == '__main__':
+#     nums = [randint(1,100) for i in range(10)]
+#     print(nums)
+#
+#     result = map(func1,nums)     #将nums中的每个数字交给func1函数进行加工,返回结果
+#     print(list(result))
+#
+#     result2 = map(lambda x: x + 2, nums)  #将nums中的每个数字交给lambda函数进行加工,返回结果
+#     print(list(result2))
+#
+# #输出结果:
+# [80, 1, 61, 44, 28, 37, 47, 39, 61, 83]
+# [82, 3, 63, 46, 30, 39, 49, 41, 63, 85]
+# [82, 3, 63, 46, 30, 39, 49, 41, 63, 85]
+
+##############################################################################
+#########函数高级应用
+###全局变量,局部变量,global
+# x = 10
+# def foo():
+#     print(x)
+# foo()
+#
+# def foo2():
+#     x = 'hello'        #局部变量也有变量x,它将会把全局变量x在此函数中遮盖住
+#     print(x)           #输出hello
+# foo2()
+# print(x)               #输出10
+#
+#
+# def foo3():
+#     global x             #声明x为全局变量,将会覆盖之前的全局变量
+#     x = 10000
+#     print(x)            #输出:10000
+# foo3()
+# print(x)                 #输出:10000
+
+####名字空间####
+
+# i = 1
+#
+# def f():
+#     i = 2
+#     def g():
+#         print(i)
+#     return g
+#
+#
+# func = f()
+# func()
+# print(i)
+
+
+###偏函数#####改造现有函数,生成新函数   待补充
+###partial
+# from functools import partial
+#
+# def add(a,b,c,d,e):
+#     return a + b + c + d + e
+# a = add(10,20,30,40,5)
+# # print(a)
+#
+# myadd = partial(add,10,20,30,40)
+# # print(myadd)
+# b = myadd(5)
+# print(b)
+#
+####简单GUI程序####简单测试
+import tkinter
+from functools import partial
+window = tkinter.Tk()
+lb = tkinter.Label(window, text="Hello World!", font="Arial 20")
+# b1 = tkinter.Button(window, fg='white', bg='blue', text='Button 1')
+MyButton = partial(tkinter.Button, window, fg='white', bg='blue')
+b1 = MyButton(text='Button 1')
+b2 = MyButton(text='Button 1')
+b3 = MyButton(text='Button 1')
+qb = MyButton(text='QUIT', command=window.quit)
+
+lb.pack()
+b1.pack()
+b2.pack()
+qb.pack()
+##################################################################################
