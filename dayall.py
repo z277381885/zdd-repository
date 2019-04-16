@@ -1823,19 +1823,23 @@
 # print(b)
 #
 ####简单GUI程序####简单测试
-import tkinter
-from functools import partial
-window = tkinter.Tk()
-lb = tkinter.Label(window, text="Hello World!", font="Arial 20")
-# b1 = tkinter.Button(window, fg='white', bg='blue', text='Button 1')
-MyButton = partial(tkinter.Button, window, fg='white', bg='blue')
-b1 = MyButton(text='Button 1')
-b2 = MyButton(text='Button 1')
-b3 = MyButton(text='Button 1')
-qb = MyButton(text='QUIT', command=window.quit)
-
-lb.pack()
-b1.pack()
-b2.pack()
-qb.pack()
+# import tkinter
+# from functools import partial
+# window = tkinter.Tk()
+# lb = tkinter.Label(window, text="Hello World!", font="Arial 20")
+# # b1 = tkinter.Button(window, fg='white', bg='blue', text='Button 1')
+# MyButton = partial(tkinter.Button, window, fg='white', bg='blue')
+# b1 = MyButton(text='Button 1')
+# b2 = MyButton(text='Button 1')
+# b3 = MyButton(text='Button 1')
+# qb = MyButton(text='QUIT', command=window.quit)
+#
+# lb.pack()
+# b1.pack()
+# b2.pack()
+# qb.pack()
 ##################################################################################
+import time
+a = time.strftime('%Y')
+print(a)
+
