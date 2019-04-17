@@ -1839,7 +1839,284 @@
 # b2.pack()
 # qb.pack()
 ##################################################################################
-import time
-a = time.strftime('%Y')
-print(a)
+# import time
+# a = time.strftime('%Y')
+# print(a)
+#
+######################20190417
+###递归函数
+# def func1(x):
+#     if x == 1:
+#         return 1
+#     return x * func1(x - 1)
+# if __name__ == '__main__':
+#     print(func1(5))
+###快速排序函数
+# from random import randint
+#
+# def paixu(item):
+#     if len(item) < 2:
+#         return item
+#
+#     px_zj = item[0]
+#     px_zx = []              #比列表第一个数小的放到这个集合
+#     px_zd = []              #比列表第一个数打的放到这个集合
+#
+#     for a in item[1:]:      #从列表第二个数开始遍历
+#         if a <= px_zj:
+#             px_zx.append(a)          #把比第一个数小的添加到px_zx列表
+#         else:
+#             px_zd.append(a)          #把比第一个数大的添加到px_zd列表
+#
+#     return paixu(px_zx) + [px_zj] + paixu(px_zd)
+#
+# if __name__ == '__main__':
+#
+#     nums = [randint(1,100) for i in range(10)]
+#     print(nums)
+#     print(paixu(nums))          #调用函数,并将nums列表传参给item
+
+#####################################################################
+####生成器
+# def my_gen():
+#     yield 'hello world'
+#     num = 10 + 5
+#     yield num
+#     yield 100
+#     yield 1
+#
+# if __name__ == '__main__':
+#     my_gen()
+#
+# a = my_gen()
+#
+# print(a.__next__())
+# print(a.__next__())
+# print(a.__next__())
+# print(a.__next__())
+# # print(a.__next__())         #报错,只定义了4个生成器
+# print()                       #空格
+# mg = my_gen()
+# for i in mg:                #实际使用中使用for循环
+#     print(i)
+
+
+#######################################################################
+###内部函数,闭包(了解)
+
+# def deco(func):
+#     def red():
+#         return '\033[31;1m%s\033[0m' % func()
+#     return red
+#
+# def hello():
+#     return 'hello world!'
+#
+# def greet():
+#     return '你好'
+#
+# if __name__ == '__main__':
+#     print(hello())      #普通调用
+#
+#     a = deco(hello)     #将hello函数作为参数传递给deco ,deco的返回值是red函数
+#     print(a())          #调用 a 函数,实际上是调用red函数
+
+# ####内部函数,装饰器(了解)
+# def deco(func):
+#     def red():
+#         return '\033[31;1m%s\033[0m' % func()
+#     return red
+#
+# def hello():
+#     return 'hello world!'
+#
+# @deco                     #装饰器
+# def greet():
+#     return '你好'
+#
+# if __name__ == '__main__':
+#     # print(hello())      #普通调用
+#
+#     a = deco(hello)     #将hello函数作为参数传递给deco ,deco的返回值是red函数
+#     print(a())          #调用 a 函数,实际上是调用red函数
+#
+#     print(greet())
+
+
+###模块
+#
+# import sys
+# print(sys.path)             #模块导入的时候,将会在sys.path定义的位置下搜索模块
+#
+#
+# ##模块导入
+# import time
+# import os,sys                               #不推荐使用
+# from random import random,choice,randint
+# import pickle as p                          #导入的同时,给模块起别名
+#
+# ###包
+# def pstar():
+#     print('*' * 30)
+#
+# import  mypace.hi
+#
+# ##相对导入模块
+# ##绝对导入模块
+
+
+##########内置模块
+###hashlib模块
+###输入文件名,生成md5哈希值的程序
+# import hashlib
+# import sys,pickle
+#
+# def ahash(fname):
+#
+#     m = hashlib.md5()               #创建文件
+#
+#     with open(fname,'rb') as fobj:
+#         while True:
+#             data = fobj.read(4096)
+#             if not data:
+#                 break
+#             m.update(data)          #更新
+#
+#     return m.hexdigest()            #输出
+#
+#
+# if __name__ == '__main__':
+#
+#     try:
+#         f = sys.argv[1]
+#         print(ahash(f))
+#     except IndexError:
+#         print('错误,请输入需要检测的文件名')
+#     except (FileNotFoundError,NameError):
+#         print('请输入正确的文件名')
+
+#############################################################
+###tarfile模块
+# import os
+# import tarfile
+#
+# os.chdir('/etc')                                        #进入目录
+# os.mkdir('/pythonbackup')                                 #创建目录
+# tar = tarfile.open('/pythonbackup/mytest.tar.gz','w:gz')
+#                                     #开始使用gzip压缩.以w方式,会创建一个mytest.tar.ge文件,pythontest目录需提前创建
+# tar.add('hosts')                                        #添加入要压缩的文件绝对路径
+# tar.add('/etc/hosts')                                   #绝对路径,会目录结果一起打包
+# tar.add('security')                                     #继续添加(这是目录)
+# tar.close()
+#
+# #以上是压缩文件的全部步骤,以下是解压缩的全部过程
+#
+# tar = tarfile.open('/pythonbackup/mytest.tar.gz','r:gz')     #打开之前创建tar包,以r的方式
+# tar.extractall('/pythonbackup/mydemo')                           #解压缩到指定目录,目录没有则会创建
+# tar.close()
+
+###############################################################
+###具有完全备份和增量备份的程序
+from time import strftime
+import os
+import tarfile
+from check_md5 import check_md5
+import pickle
+
+#定义全量备份函数
+def full_backup(src,dst,md5file):
+
+    #给完全备份的tar包命名
+    # fname = os.path.basename(src)          #只获取目标的文件名,可结合到下面一条语句了
+    fname = '%s_full_%s.tar.gz' % (os.path.basename(src), strftime('%Y%m%d'))    #取名
+    fname = os.path.join(dst,fname)          #将备份的tar包名拼接绝对路径
+
+    #打包文件
+    tar = tarfile.open(fname,'w:gz')        #打包开始
+    tar.add(src)                            #添加要打包的文件
+    tar.close()
+
+    #计算每个文件的md5值
+    md5dict = {}                                #准备用来存放哈希值的列表
+    for path, folders, files in os.walk(src):   #os.walk方式来获取文件路径和文件名,遍历元组,详情请看walk的详解
+        for file in files:                      #再遍历得到的所有文件名
+            key = os.path.join(path, file)      #拼接所有文件的路径/文件名
+            md5dict[key] = check_md5(key)       #经过check_md5程序产生的哈希值赋值给字典md5dict
+                                                #自编写的check_md5模块必须与本程序文件放同一目录,该模块作用是生成哈希值
+    #将字典写入文件
+    with open(md5file,'wb') as fobj:            #以wb方式打开md5file指定的文件,没有则创建
+        pickle.dump(md5dict,fobj)               #pickle是能将任何内容存入文件中,将字典mdict的内容写入md5file中
+
+def incr_backup(src,dst,md5file):
+
+    #给备份的tar包命名
+    # fname = os.path.basename(src)
+    fname = '%s_incr_%s.tar.gz' % (os.path.basename(src),strftime('%Y%m%d'))
+    fname = os.path.join(dst,fname)
+
+    #计算每个文件的md5值
+    md5dict = {}            #将用来装哈希值
+    for path , folders, files in os.walk(src):
+        for file in files:
+            key = os.path.join(path,file)
+            md5dict[key] = check_md5(key)
+
+    with open(md5file,'rb') as fobj:
+        old_md5 = pickle.load(fobj)
+
+    with open(md5file,'wb') as fobj:
+        pickle.dump(md5dict,fobj)
+
+    tar = tarfile.open(fname,'w:gz')
+    for key in md5dict:                         #遍历md5dict字典,返回key值
+        if md5dict[key] != old_md5.get(key):
+            tar.add(key)
+    tar.close()
+
+if __name__ == '__main__':
+    src = '/pythonbackup/mydemo/security'        #定义要备份的源目录
+    dst = '/pythonbackup/demo'                   #定义放备份文件的目录
+
+    md5file = '/pythonbackup/demo/md5.data'     #定义校验目录
+    if strftime('%a') == 'Mon':                 #判断是不是星期三
+        full_backup(src,dst,md5file)            #调用全量备份函数
+    else:
+        incr_backup(src,dst,md5file)            #调用增量备份函数
+
+
+#########################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -476,80 +476,80 @@
 
 ###记账本
 #! /usr/bin/env python
-import os,pickle,time
+# import os,pickle,time
+#
+# def ruzhang(fname):
+#     print('jz')
+#     date = time.strftime('%Y-%m-%d')
+#     rz_je = int(input('入账金额：'))
+#     rz_sm = input('入账说明：')
+#
+#     with open(fname,'rb') as fobj:
+#         data = pickle.load(fobj)
+#         balance = data[-1][-2]+rz_je
+#
+#     line = [date,rz_je,0,balance,rz_sm]
+#     data.append(line)
+#
+#     with open(fname,'wb') as fobj:
+#         pickle.dump(data,fobj)
+#
+# def chuzhang(fname):
+#     print('cz')
+#     date = time.strftime('%Y-%m-%d')
+#     cz_je = int(input('出账金额：'))
+#     cz_sm = input('出账说明：')
+#
+#     with open(fname,'rb') as fobj:
+#         data = pickle.load(fobj)
+#         balance = data[-1][-2]-cz_je
+#
+#     line = [date,0,cz_je,balance,cz_sm]
+#     data.append(line)
+#
+#     with open(fname,'wb') as fobj:
+#         pickle.dump(data,fobj)
+#
+# def chaxun(fname):
+#     print('cx')
+#     print('%-10s%-8s%-8s%-10s%-20s' %  ('登记时间','入账金额','出账金额','余额','说明'))
+#     with open(fname,'rb') as fobj:
+#         data = pickle.load(fobj)
+#     for line in data:
+#         print('%-14s%-13s%-11s%-11s%-20s' % tuple(line))
+#
+#
+# def view():
+#     xz_1 = '''0:入账
+# 1:出账
+# 2:查询
+# 3:退出
+# 请选择（0/1/2）：'''
+#     cmds = {'0':ruzhang,'1':chuzhang,'2':chaxun}
+#     fname =  'jzb.txt'
+#
+#     if not os.path.exists(fname):
+#         date_a = time.strftime('%Y-%m-%d')
+#         data_a = [
+#             [date_a,0,0,10000,'初始金额']
+#         ]
+#         with open(fname,'wb') as fobj:
+#             pickle.dump(data_a,fobj)
+#
+#     while True:
+#         xz_2 = input(xz_1).strip()
+#         if xz_2 == '3':
+#             print('选择退出')
+#             exit()
+#         if xz_2 not in ['0','1','2']:
+#             print('无效输入')
+#             continue
+#         cmds[xz_2](fname)
+#
+# if __name__ == '__main__':
+#     view()
 
-def ruzhang(fname):
-    print('jz')
-    date = time.strftime('%Y-%m-%d')
-    rz_je = int(input('入账金额：'))
-    rz_sm = input('入账说明：')
-
-    with open(fname,'rb') as fobj:
-        data = pickle.load(fobj)
-        balance = data[-1][-2]+rz_je
-
-    line = [date,rz_je,0,balance,rz_sm]
-    data.append(line)
-
-    with open(fname,'wb') as fobj:
-        pickle.dump(data,fobj)
-
-def chuzhang(fname):
-    print('cz')
-    date = time.strftime('%Y-%m-%d')
-    cz_je = int(input('出账金额：'))
-    cz_sm = input('出账说明：')
-
-    with open(fname,'rb') as fobj:
-        data = pickle.load(fobj)
-        balance = data[-1][-2]-cz_je
-
-    line = [date,0,cz_je,balance,cz_sm]
-    data.append(line)
-
-    with open(fname,'wb') as fobj:
-        pickle.dump(data,fobj)
-
-def chaxun(fname):
-    print('cx')
-    print('%-10s%-8s%-8s%-10s%-20s' %  ('登记时间','入账金额','出账金额','余额','说明'))
-    with open(fname,'rb') as fobj:
-        data = pickle.load(fobj)
-    for line in data:
-        print('%-14s%-13s%-11s%-11s%-20s' % tuple(line))
-
-
-def view():
-    xz_1 = '''0:入账
-1:出账
-2:查询
-3:退出   
-请选择（0/1/2）：'''
-    cmds = {'0':ruzhang,'1':chuzhang,'2':chaxun}
-    fname =  'jzb.txt'
-
-    if not os.path.exists(fname):
-        date_a = time.strftime('%Y-%m-%d')
-        data_a = [
-            [date_a,0,0,10000,'初始金额']
-        ]
-        with open(fname,'wb') as fobj:
-            pickle.dump(data_a,fobj)
-    while True:
-        xz_2 = input(xz_1).strip()
-        if xz_2 == '3':
-            print('选择退出')
-            exit()
-        if xz_2 not in ['0','1','2']:
-            print('无效输入')
-            continue
-        cmds[xz_2](fname)
-
-if __name__ == '__main__':
-    view()
-
-
-
+#######################################################
 
 
 
