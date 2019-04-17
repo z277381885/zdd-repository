@@ -550,7 +550,67 @@
 #     view()
 
 #######################################################
+import os
+import time
+import tarfile
+import hashlib
+import pickle
+from check_md5 import check_md5
 
+def fullback(src,dst,md5):
+
+    fname = os.path.basename(src)
+    fname = '%s_full_%s.tar.gz' % (fname,time.strftime('%Y%m%d'))
+    fname = os.path.join(dst,fname)
+    print(fname)
+
+    tar = tarfile.open(fname,'w:gz')
+    tar.add(src)
+    tar.close()
+
+    md5zidian = {}
+    for path,folders,files in os.walk(src):
+        for file in files:
+            key = os.path.join(path,file)
+            md5zidian[key] = check_md5(key)
+
+    with open( md5,'wb') as fobj:
+        pickle.dump(md5zidian,fobj)
+
+def incrback(src,dst,md5):
+
+    fname = os.path.basename(src)
+    fname = '%s_incr_%s.tar.gz' % (fname,time.strftime('%Y%m%d'))
+    fname = os.path.join(dst,fname)
+    print(fname)
+
+    with open(md5,'rb') as fobj:
+        old_md5=pickle.load(fobj)
+
+    md5zidian = {}
+    for path, folders, files in os.walk(src):
+        for file in files:
+            key = os.path.join(path,file)
+            md5zidian[key] = check_md5(key)
+
+    with open(md5,'wb') as fobj:
+        pickle.dump(md5zidian,fobj)
+
+    tar = tarfile.open(fname,'w:gz')
+    for key in md5zidian:
+        if md5zidian[key] != old_md5.get(key):
+            tar.add(key)
+    tar.close()
+
+if __name__ == '__main__':
+    src = '/pythondata/security'
+    dst = '/pythondata'
+    md5 = '/pythondata/md5.data'
+
+    if time.strftime('%a') == 'Mon':
+        fullback(src,dst,md5)
+    else:
+        incrback(src,dst,md5)
 
 
 

@@ -2024,72 +2024,77 @@ from check_md5 import check_md5
 import pickle
 
 #定义全量备份函数
-def full_backup(src,dst,md5file):
-
-    #给完全备份的tar包命名
-    # fname = os.path.basename(src)          #只获取目标的文件名,可结合到下面一条语句了
-    fname = '%s_full_%s.tar.gz' % (os.path.basename(src), strftime('%Y%m%d'))    #取名
-    fname = os.path.join(dst,fname)          #将备份的tar包名拼接绝对路径
-
-    #打包文件
-    tar = tarfile.open(fname,'w:gz')        #打包开始
-    tar.add(src)                            #添加要打包的文件
-    tar.close()
-
-    #计算每个文件的md5值
-    md5dict = {}                                #准备用来存放哈希值的列表
-    for path, folders, files in os.walk(src):   #os.walk方式来获取文件路径和文件名,遍历元组,详情请看walk的详解
-        for file in files:                      #再遍历得到的所有文件名
-            key = os.path.join(path, file)      #拼接所有文件的路径/文件名
-            md5dict[key] = check_md5(key)       #经过check_md5程序产生的哈希值赋值给字典md5dict
-                                                #自编写的check_md5模块必须与本程序文件放同一目录,该模块作用是生成哈希值
-    #将字典写入文件
-    with open(md5file,'wb') as fobj:            #以wb方式打开md5file指定的文件,没有则创建
-        pickle.dump(md5dict,fobj)               #pickle是能将任何内容存入文件中,将字典mdict的内容写入md5file中
-
-def incr_backup(src,dst,md5file):
-
-    #给备份的tar包命名
-    # fname = os.path.basename(src)
-    fname = '%s_incr_%s.tar.gz' % (os.path.basename(src),strftime('%Y%m%d'))
-    fname = os.path.join(dst,fname)
-
-    #计算每个文件的md5值
-    md5dict = {}            #将用来装哈希值
-    for path , folders, files in os.walk(src):
-        for file in files:
-            key = os.path.join(path,file)
-            md5dict[key] = check_md5(key)
-
-    with open(md5file,'rb') as fobj:
-        old_md5 = pickle.load(fobj)
-
-    with open(md5file,'wb') as fobj:
-        pickle.dump(md5dict,fobj)
-
-    tar = tarfile.open(fname,'w:gz')
-    for key in md5dict:                         #遍历md5dict字典,返回key值
-        if md5dict[key] != old_md5.get(key):
-            tar.add(key)
-    tar.close()
-
-if __name__ == '__main__':
-    src = '/pythonbackup/mydemo/security'        #定义要备份的源目录
-    dst = '/pythonbackup/demo'                   #定义放备份文件的目录
-
-    md5file = '/pythonbackup/demo/md5.data'     #定义校验目录
-    if strftime('%a') == 'Mon':                 #判断是不是星期三
-        full_backup(src,dst,md5file)            #调用全量备份函数
-    else:
-        incr_backup(src,dst,md5file)            #调用增量备份函数
-
+# def full_backup(src,dst,md5file):
+#
+#     #给完全备份的tar包命名
+#     # fname = os.path.basename(src)          #只获取目标的文件名,可结合到下面一条语句了
+#     fname = '%s_full_%s.tar.gz' % (os.path.basename(src), strftime('%Y%m%d'))    #取名
+#     fname = os.path.join(dst,fname)          #将备份的tar包名拼接绝对路径
+#
+#     #打包文件
+#     tar = tarfile.open(fname,'w:gz')        #打包开始
+#     tar.add(src)                            #添加要打包的文件
+#     tar.close()
+#
+#     #计算每个文件的md5值
+#     md5dict = {}                                #准备用来存放哈希值的列表
+#     for path, folders, files in os.walk(src):   #os.walk方式来获取文件路径和文件名,遍历元组,详情请看walk的详解
+#         for file in files:                      #再遍历得到的所有文件名
+#             key = os.path.join(path, file)      #拼接所有文件的路径/文件名
+#             md5dict[key] = check_md5(key)       #经过check_md5程序产生的哈希值赋值给字典md5dict
+#                                                 #自编写的check_md5模块必须与本程序文件放同一目录,该模块作用是生成哈希值
+#     #将字典写入文件
+#     with open(md5file,'wb') as fobj:            #以wb方式打开md5file指定的文件,没有则创建
+#         pickle.dump(md5dict,fobj)               #pickle是能将任何内容存入文件中,将字典mdict的内容写入md5file中
+#
+# def incr_backup(src,dst,md5file):
+#
+#     #给备份的tar包命名
+#     # fname = os.path.basename(src)
+#     fname = '%s_incr_%s.tar.gz' % (os.path.basename(src),strftime('%Y%m%d'))
+#     fname = os.path.join(dst,fname)
+#
+#     #计算每个文件的md5值
+#     md5dict = {}            #将用来装哈希值
+#     for path , folders, files in os.walk(src):
+#         for file in files:
+#             key = os.path.join(path,file)
+#             md5dict[key] = check_md5(key)
+#
+#     # 取出前一天的md5字典
+#     with open(md5file,'rb') as fobj:
+#         old_md5 = pickle.load(fobj)
+#
+#     # 更新md5字典文件
+#     with open(md5file,'wb') as fobj:
+#         pickle.dump(md5dict,fobj)
+#
+#     tar = tarfile.open(fname,'w:gz')
+#     for key in md5dict:           #遍历md5dict字典,返回key值,key就是文件名，value是md5值
+#         if md5dict[key] != old_md5.get(key):  #字典名[key],返回的是value，字典名.get(key)有key返回value,无key返回flase
+#             tar.add(key)           #key返回的是文件名，就添加到tar包中
+#     tar.close()
+#
+# if __name__ == '__main__':
+#     src = '/pythonbackup/mydemo/security'        #定义要备份的源目录
+#     dst = '/pythonbackup/demo'                   #定义放备份文件的目录
+#
+#     md5file = '/pythonbackup/demo/md5.data'     #定义校验目录
+#     if strftime('%a') == 'Mon':                 #判断是不是星期三
+#         full_backup(src,dst,md5file)            #调用全量备份函数
+#     else:
+#         incr_backup(src,dst,md5file)            #调用增量备份函数
+#
 
 #########################################################################################################
+adict = dict(['ab',['name','tom'],('age',22)])
 
+# print(adict)
 
-
-
-
+for key in adict:
+    # print(key)
+    print(adict[key])
+    # print(adict.get(key))
 
 
 
