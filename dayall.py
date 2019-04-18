@@ -2017,11 +2017,11 @@
 
 ###############################################################
 ###具有完全备份和增量备份的程序
-from time import strftime
-import os
-import tarfile
-from check_md5 import check_md5
-import pickle
+# from time import strftime
+# import os
+# import tarfile
+# from check_md5 import check_md5
+# import pickle
 
 #定义全量备份函数
 # def full_backup(src,dst,md5file):
@@ -2087,14 +2087,332 @@ import pickle
 #
 
 #########################################################################################################
-adict = dict(['ab',['name','tom'],('age',22)])
+# adict = dict(['ab',['name','tom'],('age',22)])
+#
+# # print(adict)
+#
+# for key in adict:
+#     # print(key)
+#     print(adict[key])
+#     # print(adict.get(key))
+#
 
-# print(adict)
+######pop简介#######################20190418##################################################
 
-for key in adict:
-    # print(key)
-    print(adict[key])
-    # print(adict.get(key))
+###类基本概念
+
+###构造器方法创建类
+
+# class Warriot:
+#     def __init__(self,name,weapon): #_init_是构造器方法,当实例化时自动调用,不是必需的
+#         self.name = name
+#         self.weapon = weapon
+#
+# if __name__ == '__main__':
+#     lb = Warriot('吕布','方天画戟')  #lb实例,自动调用_init_ .lb 与 self 对应,吕布与name对应,方天画戟与weapon对应
+#     zdd = Warriot('zdd','杀猪刀')
+#     print('%-8s   %s' % (lb.name , lb.weapon))
+#     print('%-8s   %s' % (lb.name, zdd.weapon))
+#     print('%-8s   %s' % (zdd.name , lb.weapon))
+
+#实例化时,实例自动作为第一个参数传递给_init_方法
+#self只是一个变量名,名字也可以是其他名字,python中习惯起名self
+#拥有self(绑定到实例的属性),
+
+
+###其他绑定方法##########
+
+# class Warriot:
+#     def __init__(self,name,weapon): #_init_初始化实例属性,构造器方法,当实例化时自动调用
+#         self.name = name
+#         self.weapon = weapon
+#
+#     def speak(self,content):        #创建类中函数,叫做方法,设置content参数
+#         print('%s: 我手持%s, %s' % (self.name, self.weapon, content))
+#
+# if __name__ == '__main__':
+#     lb = Warriot('吕布','方天画戟')  #lb实例,自动调用_init_ .lb 与 self 对应,吕布与name对应,方天画戟与weapon对应
+#     zdd = Warriot('zdd','杀猪刀')
+#     print(lb.name , lb.weapon)      #吕布 方天画戟
+#     print(zdd.name, zdd.weapon)     #zdd 杀猪刀
+#     print()
+#
+#     lb.speak('人在塔在')                                #调用speak方法,并传参给content
+#     zdd.speak('%s你就是渣渣,老子拔你网线' % lb.name)
+#     lb.speak('......')
+
+# ###实际输出
+# 吕布 方天画戟
+# zdd 杀猪刀
+#
+# 吕布: 我手持方天画戟, 人在塔在
+# zdd: 我手持杀猪刀, 吕布你就是渣渣,老子拔你网线
+# 吕布: 我手持方天画戟, ......
+
+
+#############################################################################
+# class Warrior:
+#     def __init__(self,name,weapon): #_init_初始化实例属性,构造器方法,当实例化时自动调用
+#         self.name = name
+#         self.weapon = weapon
+#
+#
+#     def speak(self,content):        #创建类中函数,方法,设置content参数
+#         print('%s: 我手持%s, %s' % (self.name, self.weapon, content))
+#
+#
+# if __name__ == '__main__':
+#     lb = Warrior('吕布','方天画戟')  #lb实例,自动调用_init_ .lb 与 self 对应,吕布与name对应,方天画戟与weapon对应
+#     zdd = Warriot('zdd','杀猪刀')
+#     print('%-8s   %s' % (lb.name , lb.weapon))
+#     print('%-9s   %s' % (zdd.name, zdd.weapon))
+#     print()
+#
+#     lb.speak('人在塔在')                                #调用speak方法,并传参给content
+#     zdd.speak('%s你就是渣渣,老子拔你网线' % lb.name)
+#     lb.speak('......')
+
+
+###组合和派生
+#两个不同的类,一个类是另一个类的组件
+##老师代码game2.py
+# class Weapon:
+#     def __init__(self, name, strength):
+#         self.name = name
+#         self.strength = strength
+#
+# class Warrior:
+#     def __init__(self,name,weapon): #_init_初始化实例属性,构造器方法,当实例化时自动调用
+#         self.name = name
+#         self.weapon = weapon    #weapon参数接收的是Weapon('方天画戟',100),所以又调用上面的Weapon方法
+#
+#     def speak(self,content):        #创建类中函数,方法,设置content参数
+#         print('%s: 我手持%s, %s' % (self.name, self.weapon, content))
+#
+# if __name__ == '__main__':
+#     w = Weapon('方天画戟',100)
+#     print(w.name,w.strength)        #输出:方天画戟 100
+#
+#     lb = Warrior('吕布',  w)        #lb实例,传参为weapon是传的'吕布和Weapon('方天画戟',100)'
+#     # print(lb.weapon)
+#     print(lb.weapon.name,  lb.weapon.strength)      #输出:方天画戟 100
+
+##########上面的代码进化成下面(老师代码game3.py)
+#
+# class Weapon:
+#     def __init__(self, name, strength):
+#         self.name = name
+#         self.strength = strength
+#
+# class Warrior:
+#     def __init__(self,name,wname,wstrength):  #修改地方
+#         self.name = name
+#         self.weapon = Weapon(wname,wstrength)   #修改地方,wname,wstrength传给上面Weapon方法
+#
+#     def speak(self,content):        #创建类中函数,方法,设置content参数
+#         print('%s: 我手持%s, %s' % (self.name, self.weapon, content))
+#
+# if __name__ == '__main__':
+#     lb = Warrior('吕布','方天画戟', 100)
+#     print(lb.weapon)                                #输出:<__main__.Weapon object at 0x7fc0c3ae87f0>是对象
+#     print(lb.name, lb.weapon.name,  lb.weapon.strength)      #输出:吕布 方天画戟 100
+
+# ###组合:
+#两个不同的类,一个类是另一个类的组件
+#子类继承父类
+####老师game4.py#子类与父类###########################
+# class Warrior:
+#     def __init__(self,name,weapon): #_init_初始化实例属性,构造器方法,当实例化时自动调用
+#         self.name = name
+#         self.weapon = weapon
+#
+#
+#     def speak(self,content):        #创建类中函数,方法,设置content参数
+#         print('%s: 我手持%s, %s' % (self.name, self.weapon, content))
+#
+#
+# class MaleWarriot(Warrior):         #括号中指定父类(基类),MaleWarriot子类继承了父类所有属性
+#     def attcck(self):
+#         print('attack(攻击)')
+#
+#
+# if __name__ == '__main__':
+#     lb = MaleWarriot('吕布','方天画戟')
+#     print(lb.name , lb.weapon)      #输出吕布 方天画戟
+#
+#     lb.speak('aaa')         #输出:  吕布: 我手持方天画戟, aaa,先子类MaleWarriot中,找speak方法,找不到就到父类去找
+#
+#     lb.attcck()             #输出:attack(攻击)  子类拥有父类与子类的所有功能
+
+########myclass######################################
+#
+# class A:
+#     def func1(self):
+#         print('a func')
+#
+#     def func(self):
+#         print('aaaaaaaa')
+#
+# class B:
+#     def func2(self):
+#         print('b func')
+#
+#     def func(self):
+#         print('BBBBBBBBBB')
+#
+# class C(B, A):  # 父类可以有多个
+#     def func3(self):
+#         print('c func')
+#
+#     def func(self):
+#         print('CCCCCCCCCCC')
+#
+# if __name__ == '__main__':
+#     c1 = C()         # c1具有ABC三个类的方法
+#     c1.func1()
+#     c1.func2()
+#     c1.func3()
+#     c1.func()  # 同名方法查找的顺序是自下向上，自左向右
+# #显示结果:
+# # a func
+# # b func
+# # c func
+# # CCCCCCCCCCC
+
+############################################################
+##出版商程序##
+# magic魔法方法:指的是那些__xxxx__这样的方法
+# class Book:
+#     def __init__(self,title,author):
+#         self.title = title
+#         self.author = author
+#
+#     def __str__(self):
+#         return '<%s>' % corepy.title
+#
+#     def __call__(self):
+#         print('<%s> is written by %s ' % (self.title , self.author))
+#
+#
+# if __name__ == '__main__':
+#     corepy = Book('Python核心编程', 'Wesley')       #调用__init__方法
+#     print(corepy)       #自动调用__str__方法,打印实例,                  输出:<Python核心编程>
+#     corepy()            #自动调用__call__方法,使实例像函数一样,可以调用使用 输出:<Python核心编程> is written by Wesley
+
+##显示结果
+# <Python核心编程>
+# <Python核心编程> is written by Wesley
+
+
+# ####正则
+
+
+
+#####re模块
+
+import re
+#match函数:从字符串开头开始匹配,匹配成功,则返回一个匹配对象,否则返回None
+# a = re.match('f..','food')          #从头开始匹配,
+# print(a)                            #输出:<_sre.SRE_Match object; span=(0, 3), match='foo'>
+#
+# b = re.match('f..','seafood')            #未匹配到,返回None
+# print(b)                                 #输出:None
+
+####search函数:在字符串中查找正则表达式模式的第一次出现,如果匹配成功,则返回一个匹配对象,否则返回None
+# c = re.search('f..','seafood')  #搜索
+# print(c.group())                #输出:foo   匹配对象的group方法获取匹配内容
+
+##group方法:使用match或search匹配成功后,返回的匹配对象可以通过group方法获得匹配内容
+
+
+
+####findall函数:在字符串中查找正则表达式模式的所有(非重复)出现,返回一个匹配对象的列表
+# d = re.findall('f..','seafood')     #返回所有匹配内容的列表
+# print(d)                            #输出:['foo'] --列表
+#
+# e = re.findall('f..','seafood is food')
+# print(e)                                #输出:['foo', 'foo'] --列表
+
+
+####finditer函数:和findall函数有相同的功能,但返回的不是列表而是迭代器,对于每个匹配,该迭代器返回一个匹配对象
+# f = re.finditer('f..','seafood is food')    #返回的是由匹配对象构成的生成器
+# print(f)                                #输出<callable_iterator object at 0x7f13b3b67630>
+# for i in f:
+#     print(i.group())
+# 输出结果
+# foo
+# foo
+
+###split方法:根据正则表达式中的分隔符把字符分隔为一个列表,并返回成功匹配的列表
+###字符串也有类似的方法,但是正则表达式更加灵活
+# g = re.split('-|\.' , 'hello-world.tar.ge')
+# print(g)                            #输出:['hello', 'world', 'tar', 'ge']
+#
+#
+# ####sub方法:把字符串中所有匹配正则表达式的地方替换成新的字符串
+# h = re.sub('X','zdd','Hi X . How art you X')        #将目标里的X全部换成zdd
+# print(h)                            #输出:Hi zdd . How art you zdd
+
+
+###compile函数:对正则表达式模式进行编译,返回一个正则表达式对象
+##不是必须要用这种方式,但是在大量匹配的情况下,可以提升效率
+# i = re.search('f..' , 'seafood')
+# print(i.group())
+#
+# patt = re.compile('f..')            #模式先编译,可提升效率,建议做法
+# i = patt.search('seafood')          #编译后的对象也有search(返回第一个匹配)/findall(返回列表)等方法
+# print(i.group())                    #输出:foo
+
+
+##贪婪匹配: 默认情况下,* +总是尽量多的匹配
+# # *  +和? 都是贪婪匹配操作符,在其后加上?可以取消其贪婪匹配行为
+# # 正则表达式匹配对象通过groups函数获取子组
+
+# j = re.search('.+(\d+)','his phone number is :15011223345')
+# print(j.group())             #j.group总是匹配全部的模式.+(\d+)       #输出:his phone number is :15011223345
+#
+# print(j.group(1))                   #匹配第1个()中的内容
+# print(j.group(2))                 #报错
+# 说明:.+是贪婪匹配,它尽可能匹配更多,的内容，\d+至少需要一个数字，所以.+给\d+留了
+#
+##如果希望\d+能匹配更多的内容，使用?来取消贪婪匹配，让\d+匹配更多内容 如下
+# k = re.search('.+?(\d+)' , 'his phone number is :15011223345')
+# print(k.group())            #输出:his phone number is :15011223345
+#
+# print(k.group(1))           #输出:15011223345
+
+###分析apache访问日志
+# import re
+#
+# def count_patt(fnam,patt):
+#     patt_dict = {}
+#     cpatt = re.compile(patt)        #编译,patt由参数传过来,ip或者br的正则
+#     with open(fname) as fobj:       #打开文件
+#         for line in fobj:           #遍历这个文件,获得每一行的内容
+#             m = cpatt.search(line)  #经过上面编译后,在这search每一行,返回符合ip正则或者br正则
+#             if m:                   # 如果匹配到内容，放到下面key变量，None表示False
+#                 key = m.group()
+#                 patt_dict[key] = patt_dict.get(key,0) + 1
+#     return patt_dict
+#
+# if __name__ == '__main__':
+#     fname = 'access_log'        #access_log为apache日志文件
+#     ip = '^(\d+\.){3}\d+'       # 1.11.123.45,  12345.11111.23423.2535234
+#     br = 'Chrome|Firefox|MSIE'
+#     print(count_patt(fname,ip))
+#     print(count_patt(fname,br))
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
