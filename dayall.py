@@ -2381,7 +2381,7 @@ import re
 #
 # print(k.group(1))           #输出:15011223345
 
-###分析apache访问日志
+###分析apache访问日志--函数方式
 # import re
 #
 # def count_patt(fnam,patt):
@@ -2394,13 +2394,52 @@ import re
 #                 key = m.group()
 #                 patt_dict[key] = patt_dict.get(key,0) + 1
 #     return patt_dict
-#
+# #
 # if __name__ == '__main__':
 #     fname = 'access_log'        #access_log为apache日志文件
 #     ip = '^(\d+\.){3}\d+'       # 1.11.123.45,  12345.11111.23423.2535234
 #     br = 'Chrome|Firefox|MSIE'
 #     print(count_patt(fname,ip))
 #     print(count_patt(fname,br))
+
+###分析apache访问日志--oop方式
+#1统计每个客户访问apache服务器的次数
+#2将统计信息通过字典方式显示出来
+#3分别统计客户端是firefox和msie的访问次数
+#4分别使用函数式编程和面向对象编程的方式实现
+import re
+class wenjianfenxi:                 #创建wenjianfenxi类
+    def __init__(self,fname,patt):  #类中定义的函数叫做“方法”：
+        #__init__ 为初始化实例属性
+        self.name = fname
+        self.patt = patt
+
+    def count(self):        #间接调用被封装的内容
+        #类中定义的函数叫做“方法”：count方法
+        # print(self.name)
+        # print(self.patt)
+        patt_dict = {}
+        cpatt = re.compile(self.patt)        #编译,self.patt = patt由参数传过来,ip或者br的正则
+        with open(self.name) as fobj:       #打开文件，self.name = fname
+            for line in fobj:           #遍历这个文件,获得每一行的内容
+                m = cpatt.search(line)  #经过上面编译后,在这search每一行,返回符合ip正则或者br正则
+                if m:                   # 如果匹配到内容，放到下面key变量，None表示False
+                    key = m.group()
+                    patt_dict[key] = patt_dict.get(key,0) + 1
+        return patt_dict
+
+if __name__ == '__main__':
+    fname = 'access_log'
+    ip = '^(\d+\.){3}\d+'  # 1.11.123.45,  12345.11111.23423.2535234
+    br = 'Chrome|Firefox|MSIE'
+
+    lb_ip = wenjianfenxi(fname,ip)
+    print(lb_ip.count())
+    # 根据wenjianfenxi类创建对象lb_ip对象，将fname,ip封装到lb_ip的fname 和 patt中
+
+    lb_br = wenjianfenxi(fname,br)
+    print(lb_br.count())
+    # 根据wenjianfenxi类创建对象lb_br对象，将fname,br封装到lb_ip的fname 和 patt中
 
 
 
