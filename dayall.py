@@ -2384,7 +2384,7 @@ import re
 ###分析apache访问日志--函数方式
 # import re
 #
-# def count_patt(fnam,patt):
+# def count_patt(fname,patt):
 #     patt_dict = {}
 #     cpatt = re.compile(patt)        #编译,patt由参数传过来,ip或者br的正则
 #     with open(fname) as fobj:       #打开文件
@@ -2401,84 +2401,485 @@ import re
 #     br = 'Chrome|Firefox|MSIE'
 #     print(count_patt(fname,ip))
 #     print(count_patt(fname,br))
+##################################
+#
+# # ###分析apache访问日志--oop方式---通过对象直接调用被封装的内容
+# # #1统计每个客户访问apache服务器的次数
+# # #2将统计信息通过字典方式显示出来
+# # #3分别统计客户端是firefox和msie的访问次数
+# # #4分别使用函数式编程和面向对象编程的方式实现
+# import re
+# class wenjianfenxi:                 #创建wenjianfenxi类
+#
+#     def count(self,fname,patt):        #间接调用被封装的内容
+#         #类中定义的函数叫做“方法”：count方法
+#         # print(self.name)
+#         # print(self.patt)
+#         patt_dict = {}
+#         cpatt = re.compile(patt)        #编译,self.patt = patt由参数传过来,ip或者br的正则
+#         with open(fname) as fobj:       #打开文件，self.name = fname
+#             for line in fobj:           #遍历这个文件,获得每一行的内容
+#                 m = cpatt.search(line)  #经过上面编译后,在这search每一行,返回符合ip正则或者br正则
+#                 if m:                   # 如果匹配到内容，放到下面key变量，None表示False
+#                     key = m.group()
+#                     patt_dict[key] = patt_dict.get(key,0) + 1
+#         return patt_dict
+#
+# if __name__ == '__main__':
+#     fname = 'access_log'
+#     ip = '^(\d+\.){3}\d+'  # 1.11.123.45,  12345.11111.23423.2535234
+#     br = 'Chrome|Firefox|MSIE'
+#     lb = wenjianfenxi()
+#     print(lb.count(fname,ip))
+#     print(lb.count(fname,br))
 
-###分析apache访问日志--oop方式
-#1统计每个客户访问apache服务器的次数
-#2将统计信息通过字典方式显示出来
-#3分别统计客户端是firefox和msie的访问次数
-#4分别使用函数式编程和面向对象编程的方式实现
-import re
-class wenjianfenxi:                 #创建wenjianfenxi类
-    def __init__(self,fname,patt):  #类中定义的函数叫做“方法”：
-        #__init__ 为初始化实例属性
-        self.name = fname
-        self.patt = patt
+#
+###########################################################
+# ###分析apache访问日志--oop方式---通过self间接调用被封装的内容111      后面还有222哦
+# #1统计每个客户访问apache服务器的次数
+# #2将统计信息通过字典方式显示出来
+# #3分别统计客户端是firefox和msie的访问次数
+# #4分别使用函数式编程和面向对象编程的方式实现
+# import re
+# class wenjianfenxi:                 #创建wenjianfenxi类
+#     def __init__(self,fname,patt):  #类中定义的函数叫做“方法”：
+#         #__init__ 为初始化实例属性
+#         self.name = fname
+#         self.patt = patt
+#
+#     def count(self):        #间接调用被封装的内容
+#         #类中定义的函数叫做“方法”：count方法
+#         # print(self.name)
+#         # print(self.patt)
+#         patt_dict = {}
+#         cpatt = re.compile(self.patt)        #编译,self.patt = patt由参数传过来,ip或者br的正则
+#         with open(self.name) as fobj:       #打开文件，self.name = fname
+#             for line in fobj:           #遍历这个文件,获得每一行的内容
+#                 m = cpatt.search(line)  #经过上面编译后,在这search每一行,返回符合ip正则或者br正则
+#                 if m:                   # 如果匹配到内容，放到下面key变量，None表示False
+#                     key = m.group()
+#                     patt_dict[key] = patt_dict.get(key,0) + 1
+#         return patt_dict
+#
+# if __name__ == '__main__':
+#     fname = 'access_log'
+#     ip = '^(\d+\.){3}\d+'  # 1.11.123.45,  12345.11111.23423.2535234
+#     br = 'Chrome|Firefox|MSIE'
+#
+#     lb_ip = wenjianfenxi(fname,ip)
+#     print(lb_ip.count())
+#     # 根据wenjianfenxi类创建对象lb_ip对象，将fname,ip封装到lb_ip的fname 和 patt中
+#
+#     lb_br = wenjianfenxi(fname,br)
+#     print(lb_br.count())
+#     # 根据wenjianfenxi类创建对象lb_br对象，将fname,br封装到lb_ip的fname 和 patt中
 
-    def count(self):        #间接调用被封装的内容
-        #类中定义的函数叫做“方法”：count方法
-        # print(self.name)
-        # print(self.patt)
-        patt_dict = {}
-        cpatt = re.compile(self.patt)        #编译,self.patt = patt由参数传过来,ip或者br的正则
-        with open(self.name) as fobj:       #打开文件，self.name = fname
-            for line in fobj:           #遍历这个文件,获得每一行的内容
-                m = cpatt.search(line)  #经过上面编译后,在这search每一行,返回符合ip正则或者br正则
-                if m:                   # 如果匹配到内容，放到下面key变量，None表示False
-                    key = m.group()
-                    patt_dict[key] = patt_dict.get(key,0) + 1
-        return patt_dict
+######################
+# ###分析apache访问日志--oop方式---通过self间接调用被封装的内容222
+# #1统计每个客户访问apache服务器的次数
+# #2将统计信息通过字典方式显示出来
+# #3分别统计客户端是firefox和msie的访问次数
+# #4分别使用函数式编程和面向对象编程的方式实现
+# import re                               #正则模块
+# from collections import Counter         #调用Counter统计排序模块
+#
+# class wenjianfenxi:                 #创建wenjianfenxi类
+#     def __init__(self,fname):  #较上一种方法,这里少定义了patt参数
+#         #__init__ 为初始化实例属性
+#         self.name = fname
+#
+#
+#     def count(self,patt):        #较上一种方法,这里多定义了patt参数
+#         #类中定义的函数叫做“方法”：count方法
+#         patt_dict = {}
+#         cpatt = re.compile(patt)        #较上一种方法,这里只定义了patt,不是调用self.patt参数了
+#         with open(self.name) as fobj:       #打开文件，self.name = fname
+#             for line in fobj:           #遍历这个文件,获得每一行的内容
+#                 m = cpatt.search(line)  #经过上面编译后,在这search每一行,返回符合ip正则或者br正则
+#                 if m:                   # 如果匹配到内容，放到下面key变量，None表示False
+#                     key = m.group()
+#                     patt_dict[key] = patt_dict.get(key,0) + 1
+#         return patt_dict
+#
+# if __name__ == '__main__':
+#     fname = 'access_log'
+#     ip = '^(\d+\.){3}\d+'  # 1.11.123.45,  12345.11111.23423.2535234
+#     br = 'Chrome|Firefox|MSIE'
+#
+#     lb_ip = wenjianfenxi(fname)
+#     # 根据wenjianfenxi类创建对象lb_ip对象，将fname,ip封装到lb_ip的fname 和 patt中
+#     print(lb_ip.count(ip))     #较上一种方法,这里使用对象传参时,添加了新的变量ip.这个变量给了count方法的patt
+#     print(lb_ip.count(br))     #较上一种方法,这里使用对象传参时,添加了新的变量br.这个变量给了count方法的patt
+#     #较上一种方法,这里少创建一个对象
+
+#########Couter排序###################
+# from collections  import Counter        ##排序函数
+# c = Counter()
+# c.update(['192.168.1.1'])
+# c.update(['192.168.1.1'])
+# c.update(['192.168.1.20'])
+# c.update(['zdd'])
+# c.update(['zdd'])
+# c.update(['zdd'])
+# c.update(['zdd123'])
+# print(c)
+# #输出:Counter({'zdd': 3, '192.168.1.1': 2, '192.168.1.20': 1, 'zdd123': 1})
+# #自动按出现次数从多到少排序
+# print(c.most_common())
+# #输出:[('zdd', 3), ('192.168.1.1', 2), ('192.168.1.20', 1), ('zdd123', 1)]
+# print(c.most_common(2))                 #将排在前的2个输出
+# #输出[('zdd', 3), ('192.168.1.1', 2)]
+# print(c.most_common(3))                 #将排在前的3个输出
+# #输出:[('zdd', 3), ('192.168.1.1', 2), ('192.168.1.20', 1)]
+
+####改进
+
+# import re                               #正则模块
+# from collections import Counter         #调用Counter统计排序模块
+#
+# class wenjianfenxi:                 #创建wenjianfenxi类
+#     def __init__(self,fname):  #较上一种方法,这里少定义了patt参数
+#         #__init__ 为初始化实例属性
+#         self.name = fname
+#
+#
+#     def count(self,patt):        #较上一种方法,这里多定义了patt参数
+#         #类中定义的函数叫做“方法”：count方法
+#         patt_dict = Counter()           #这里修改,将{} 换成Counter()
+#         cpatt = re.compile(patt)        #较上一种方法,这里只定义了patt,不是调用self.patt参数了
+#         with open(self.name) as fobj:       #打开文件，self.name = fname
+#             for line in fobj:           #遍历这个文件,获得每一行的内容
+#                 m = cpatt.search(line)  #经过上面编译后,在这search每一行,返回符合ip正则或者br正则
+#                 if m:                   # 如果匹配到内容，放到下面key变量，None表示False
+#                     key = m.group()
+#                     patt_dict.update([key])
+#                         #这里修改,将 patt_dict[key] = patt_dict.get(key,0) + 1换成 patt_dict.update([key])
+#         return patt_dict
+#
+# if __name__ == '__main__':
+#     fname = 'access_log'
+#     ip = '^(\d+\.){3}\d+'  # 1.11.123.45,  12345.11111.23423.2535234
+#     br = 'Chrome|Firefox|MSIE'
+#
+#     lb_ip = wenjianfenxi(fname)
+#     # 根据wenjianfenxi类创建对象lb_ip对象，将fname,ip封装到lb_ip的fname 和 patt中
+#     print(lb_ip.count(ip))     #较上一种方法,这里使用对象传参时,添加了新的变量ip.这个变量给了count方法的patt
+#     print(lb_ip.count(br))     #较上一种方法,这里使用对象传参时,添加了新的变量br.这个变量给了count方法的patt
+#     #较上一种方法,这里少创建一个对象
+
+
+    #输出的结果按value次数大小排序输出u
+###################################################
+##
+
+##########
+# import socket
+#
+# host = ''  #表示0.0.0.0
+# port = 12345
+# addr = (host,port)
+#
+# s = socket.socket()   #默认创建TCP套接字
+# s.bind(addr)          #绑定地址到套接字
+# s.listen(1)           #启动监听过程   netstat -tlpn |grep :12345
+#
+# cli_sock , cli_addr = s.accept()    #等待客户端连接,收到连接返回(客户机套接字)
+#
+# print('客户机: ',cli_addr)
+# data = cli_sock.recv(1024)  #最多一次
+# print(data)
+# cli_sock.send(b'How are you?\r\n')  # 发送的数据必须是bytes类型
+# cli_sock.close()
+# s.close()
+
+#####################################
+# ##套接字--创建TCP服务器
+# import socket
+#
+# host = ''            #表示0.0.0.0
+# port = 12345
+# addr = (host,port)
+#
+# s = socket.socket()   #默认创建TCP套接字
+# #程序执行结束后,操作系统默认会保留套接字1分钟,在1分钟内无法再次使用相同的套接字
+# s.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)       #取消1分钟限制
+#
+# s.bind(addr)                #绑定地址到套接字
+# s.listen(1)                 #启动监听过程   netstat -tlpn |grep :12345
+#
+#
+# cli_sock , cli_addr = s.accept()    #等待客户端连接,收到连接返回(客户机套接字)
+#
+# print('这个客户机连上来了: ',cli_addr)
+# data = cli_sock.recv(1024)  #最多一次接收1024字节数据
+# print(data)
+# cli_sock.send(b'How are you?\r\n')  # 自动回复的数据必须是bytes类型
+# cli_sock.close()
+# s.close()
+
+
+
+####字符类型###################
+# 有str类型和bytes类型.
+# 字符有str类型和bytes类型，它们之间的转换：
+# >>> s1 = '您好'
+# >>> type(s1)
+# <class 'str'>
+# >>> s1.encode()
+# b'\xe6\x82\xa8\xe5\xa5\xbd'
+# >>> b1 = s1.encode()
+# >>> b1
+# b'\xe6\x82\xa8\xe5\xa5\xbd'
+# >>> b1.decode()
+# '您好'
+
+# ##套接字--创建TCP服务器--两边对话--服务端server
+# import socket
+#
+# host = ''            #表示0.0.0.0
+# port = 12345
+# addr = (host,port)
+#
+# s = socket.socket()   #默认创建TCP套接字 s 为变量,可自定义
+#     #程序执行结束后,操作系统默认会保留套接字1分钟,在1分钟内无法再次使用相同的套接字 --如下取消
+# s.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)       #取消1分钟限制
+#
+# s.bind(addr)                #绑定地址到套接字
+# s.listen(1)                 #启动监听过程   netstat -tlpn |grep :12345
+#
+# while True:
+#
+#     try:
+#         cli_sock , cli_addr = s.accept()    #接受客户端连接,收到连接返回(客户机套接字)并重新赋值给cli_sock , cli_addr
+#                                             #s.accept() 接受客户端连接,
+#     except KeyboardInterrupt:
+#         print(' 退出')
+#         break
+#
+#     print('这个客户机连上来了: ',cli_addr)   #有client连上之后,在server端输出内容
+#
+#     while True:
+#         data = cli_sock.recv(1024)      #等待接受客户端的数据.最多一次接收1024字节数据
+#         if data.strip() == b'quit':     #判断对方发送来的是否是quit,如果是则跳出循环,将关闭套接字
+#             break
+#         print(data.decode(),end='')     #server端输出客户端发送来的数据
+#
+#         a = input('>:') + '\r\n'     #获取server端回复的信息
+#         # b = a.encode()          #将输入的字符转换为:bytes类型
+#         # cli_sock.send(b)        #向对方回复的数据必须是bytes类型,回复变量 b 的内容给对方
+#         cli_sock.send(a.encode()) #server端发送数据
+#
+#     cli_sock.close()
+#
+# s.close()
+#
+# ####
+#
+# ##套接字--创建TCP服务器--两边对话--客户端client
+# import socket
+#
+# server = '192.168.4.254'    #服务端地址
+# port = 12345                #服务端TCP服务器端口
+# addr = (server,port)
+# c = socket.socket()           #创建套接字
+# c.connect(addr)            #连接服务端
+#
+# while True:
+#     data = input('quit to end >') + '\r\n'  #上面服务端程序做的是先收再发,这边客户端就先发再收
+#     c.send(data.encode())                   #将输入的数据转换成bytes类型,发送给服务端
+#     if data.split() == 'quit':              #将输入的字符串去掉两边空白(split的作用),再判断
+#         break
+#     rdata = c.recv(1024)                    #接受对方(服务端)的数据
+#     print(rdata.decode(),end='')
+#
+# c.close()
+#############################################################################
+
+# #创建udp服务器server---一次对话
+# import  socket
+#
+# host = ''
+# port = 12345
+# addr = (host,port)
+# s = socket.socket(type=socket.SOCK_DGRAM)
+# s.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)
+# s.bind(addr)
+# data , cli_addr = s.recvfrom(1024)  #一次最多接收1024字节数据，返回值是(数据，客户机地址)
+#
+# print(data.decode(),end='')
+# s.sendto(b'from server:hello world\r\n', cli_addr)  #项客户端地址发送数据
+# s.close()
+#
+# ##创建udp客户端client--一次对话
+# import socket
+#
+# host = '192.168.4.254'
+# port = 12345
+# addr = (host,port)
+#
+# c = socket.socket(type=socket.SOCK_DGRAM)
+# c.sendto(b'from client:nihao\r\n', addr)
+# info = c.recvfrom(1024)
+# print(info())
+
+####################################################################
+
+# 创建udp服务器server---多次对话--返回信息加上时间戳
+# import  socket
+# from time import strftime
+#
+# host = ''
+# port = 12345
+# addr = (host,port)
+# s = socket.socket(type=socket.SOCK_DGRAM)
+# s.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)
+# s.bind(addr)
+#
+# while True:
+#     try:
+#         data , cli_addr = s.recvfrom(1024)  #一次最多接收1024字节数据，返回值是(数据，客户机地址)
+#     except KeyboardInterrupt:
+#         print(' 结束')
+#         break
+#
+#     #data  =  data.decode()      #bytes转str
+#     print(data.decode,end='')
+#
+#     rdata = '[%s] %s' % (strftime('%H:%M:%S'),data)
+#
+#     s.sendto(rdata.encode() , cli_addr)     #str转bytes 向客户端发送数据
+#
+# s.close()
+#
+# ##创建udp客户端client--多此对话--返回信息加上时间戳
+# import socket
+#
+# host = '192.168.4.254'
+# port = 12345
+# addr = (host,port)
+#
+# c = socket.socket(type=socket.SOCK_DGRAM)
+#
+# while True:
+#     data = input('> ') + '\r\n'
+#
+#     if info.decode == 'quit':
+#         break
+#
+#     c.sendto(data.encode(), addr)
+#     # info = c.recvfrom(1024)   # (数据，服务器地址)
+#     data = c.recvfrom(1024)[0]
+#     print(data.decode(), end='')
+#
+#
+# c.close()
+
+
+###多线程
+#
+# import os
+#
+# print('start')
+# os.fork()           #产生子进程,以下代码将会在父进程和子进程中同时执行
+# print('hello world')
+#
+# #输出结果:
+# start
+# hello world
+# hello world
+###############################
+# import os
+# print('start')
+# retval = os.fork()  # 父进程的返回值是非0值(子进程的PID)，子进程的返回值是0
+# if retval:          #判断retval是否非空
+#     print('父进程')
+# else:
+#     print('子进程')
+# print('both')
+#
+# #输出结果:
+# start
+# 父进程
+# both
+# 子进程
+# both
+
+################################
+# import os
+# for i in range(3):
+#     retval = os.fork()
+#     if not retval:
+#         print('hello World')
+#         exit()                  # 子进程执行完毕后退出，否则它将继续生成子进程
+#
+# # #输出结果:
+# # Hello World!
+# # Hello World!
+# # Hello World!
+
+# ###扫描存活主机
+# import subprocess
+# import os
+#
+# def ping(p_wd,p_zjks,p_zjjw):
+#     print (range(int(p_zjks),int(p_zjjw)))
+#
+#     for p_zj in range(int(p_zjks),int(p_zjjw)+1):
+#
+#         retval = os.fork()
+#         if not retval:
+#             print('1')
+#             print('2')
+#             jg = subprocess.call('ping -c 2 %s.%s > /dev/null' %  (p_wd ,p_zj), shell=True)
+#
+#             if jg == 0:
+#                 print('%s.%s:up' % (p_wd,p_zj))
+#             else:
+#                 print('%s.%s:down' % (p_wd,p_zj))
+#             exit()
+#
+# def show_menu():
+#     p_bs = input('网段:')
+#     p_zjks = input('开始主机地址:')
+#     p_zjjw = input('结尾主机地址:')
+#
+#     ping(p_bs,p_zjks,p_zjjw)
+#
+#
+# if __name__ == '__main__':
+#     show_menu()
+
+
+###扫描存活主机
+import subprocess
+import os
+
+
+def ping(ip):
+
+            jg = subprocess.call('ping -c 2 %s > /dev/null' % ip, shell=True)
+
+            if jg == 0:
+                print('%s:up' % ip)
+            else:
+                print('%s:down' % ip)
+
+def show_menu():
+    p_bs = input('网段:')
+    p_zjks = input('开始主机地址:')
+    p_zjjw = input('结尾主机地址:')
+
+    ip_d = [range(p_zjks,p_zjjw)]
+
+    ips = ['%s.%s' % (p_bs ,ip_d)]
+
+    for p_zj in ips:
+
+        retval = os.fork()
+        if not retval:
+            ping(p_zj)
+            exit()
+
 
 if __name__ == '__main__':
-    fname = 'access_log'
-    ip = '^(\d+\.){3}\d+'  # 1.11.123.45,  12345.11111.23423.2535234
-    br = 'Chrome|Firefox|MSIE'
-
-    lb_ip = wenjianfenxi(fname,ip)
-    print(lb_ip.count())
-    # 根据wenjianfenxi类创建对象lb_ip对象，将fname,ip封装到lb_ip的fname 和 patt中
-
-    lb_br = wenjianfenxi(fname,br)
-    print(lb_br.count())
-    # 根据wenjianfenxi类创建对象lb_br对象，将fname,br封装到lb_ip的fname 和 patt中
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    show_menu()
