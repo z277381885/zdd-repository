@@ -2850,36 +2850,75 @@ import re
 #     show_menu()
 
 
-###扫描存活主机
-import subprocess
-import os
+# ###扫描存活主机---函数方式(自己写)
+# import subprocess           #加载支持linux系统内部命令模块
+# import os
+# import collections
+# # rc = subprocess.run('ping -c 2 192.168.1.254 &> /dev/null' , shell=True)
+# # # print(rc)
+# # print(rc.returncode)
+# # rc = subprocess.call('ping -c 2 192.168.1.254 &> /dev/null', shell=True)
+# # print(rc)
+#
+#
+# def ping(ip):
+#     # print('子进程调用ping函数测试主机:%s' % ip)
+#     # rc = subprocess.run('ping  -c 4 %s ' % ip, shell=True)
+#     rc = subprocess.call('ping  -c2 %s &>/dev/null' % ip, shell=True)
+#
+#     if rc:
+#         print('%s:down' % ip)       #当re=1，执行
+#         # print(rc)
+#     else:
+#         print('%s:up' % ip)         #当re=0，执行
+#         # print(rc)
+# def show_menu():
+#
+#     try:
+#         p_bs = input('网段:')
+#         p_zjks = int(input('开始主机地址:'))
+#         p_zjjw = int(input('结尾主机地址:'))
+#     except KeyboardInterrupt:
+#         print(' >结束')
+#         exit()
+#     except (ValueError,UnboundLocalError):
+#         print('无效参数')
+#         exit()
+#
+#     ips = [p_bs + '.%s' %  i for i in range(p_zjks,p_zjjw+1)]
+#     print(ips)
+#
+#     for p_zj in ips:
+#         retval = os.fork()        #fork产生子进程
+#         if not retval:
+#             # print('进入子进程')
+#             ping(p_zj)            #子进程取执行ping函数
+#             exit()
+#
+# if __name__ == '__main__':
+#     show_menu()
+############扫描存活主机---函数方式(达内网站case案例)
+# import subprocess                   #加载支持Linux系统内部命令模块
+# import os
+#                                     #定义函数，允许ping任何主机，ping函数需要给IP作为参数
+# def ping(host):
+#     rc = subprocess.call(
+#         'ping -c2 %s &> /dev/null' % host,
+#         shell=True
+#     )                               #定义ping命令的变量，返回值0:正常，返回值1：ping不通
+#     if rc:
+#         print('%s: down' % host)    #无法ping通打印down
+#     else:
+#         print('%s: up' % host)        #当re=0，表示可以ping通，打印up
+# if __name__ == '__main__':
+#                                      #生成整个网段的IP列表[172.40.58.1,172.40.58.2....]
+#     ips = ['176.52.8.%s' % i for i in range(1, 255)]
+#     for ip in ips:
+#         pid = os.fork()             # 父进程负责生成子进程
+#         if not pid:                 # 子进程负责调用ping函数
+#             ping(ip)
+#             exit()        # 子进程ping完一个地址后结束，不要再循环
 
 
-def ping(ip):
-
-            jg = subprocess.call('ping -c 2 %s > /dev/null' % ip, shell=True)
-
-            if jg == 0:
-                print('%s:up' % ip)
-            else:
-                print('%s:down' % ip)
-
-def show_menu():
-    p_bs = input('网段:')
-    p_zjks = input('开始主机地址:')
-    p_zjjw = input('结尾主机地址:')
-
-    ip_d = [range(p_zjks,p_zjjw)]
-
-    ips = ['%s.%s' % (p_bs ,ip_d)]
-
-    for p_zj in ips:
-
-        retval = os.fork()
-        if not retval:
-            ping(p_zj)
-            exit()
 
 
-if __name__ == '__main__':
-    show_menu()

@@ -432,8 +432,204 @@
 # if __name__ == '__main__':
 #     a = js()
 ####36-模块基础
+# hi = 'hello world'
+# def pstar(n=50):
+#     print('*' * n)
+#
+# if __name__ == '__main__':
+#     pstar()
+#     pstar(20)
+###37-生成随机密码
+# import random
+# import string
+# import sys
+#
+# def passwd(n=8):
+#     a = string.digits + string.ascii_letters
+#     b = ''                                  #先定义个空字符
+#     for i in range(n):
+#         b += random.choice(a)
+#
+#     print(b)
+#
+# if __name__ == '__main__':
+#     # a = sys.argv[1]
+#     passwd()
+#     passwd(4)
+
+# print('%s' % i for i in range(8))
+# a = list('%s' % i for i in range(7))
+# b = list('%s' % i for i in range(1,7))
+# print(a)
+# print(b)
+###38-序列对象方法
+
+# print(list('hello'))     #将字符串转换成列表
+# print(tuple('hello'))    #将字符串转换成元组
+# print(str('hello'))      #字符串
+
+# from random import randint
+# # num_list = [randint(1, 100) for i in range(10)]
+# # print(num_list)
+# # print(max(num_list))
+# # print(min(num_list))
+#
+# num_list = (randint(1, 100) for i in range(10))
+# print(num_list)
+#
+# # print(max(num_list))
+# # print(min(num_list))
+#
+# ages1 = (11,22,33,44,55)
+# ages2 = [11,22,33,44,55]
+# print(list(ages1))
+# print(tuple(ages2))
 
 
+###39-序列对象方法2
+# alist = [10,'john','zdd']
+
+# for ind in range (len(alist)):
+#     print('%s ,%s' % (ind,alist[ind]))
+#
+# print(list((enumerate(alist))))    #输出[(0, 10), (1, 'john'), (2, 'zdd')]
+#
+# for item in enumerate(alist):
+#     print('%s,%s' % (item[0],item[1]))
+#
+# for ind,val in enumerate(alist):      #常用
+#     print('%s,%s' % (ind , val))
+####以上都是输出:
+# 0,10
+# 1,john
+# 2,zdd
+
+# print(list((enumerate(alist))))
+#[(0, 10), (1, 'john'), (2, 'zdd')]
+
+# for ind,ch in enumerate(alist[1:]):
+#     print(ind)
+#     print(ch)
+# ####以上输出:
+# # 0
+# # john
+# # 1
+# # zdd
+
+# atuple = (96,97,40,75,58,34,69,29,66,90)
+# # print(sorted(atuple))    #[29, 34, 40, 58, 66, 69, 75, 90, 96, 97]#从小到达排列,并转换为列表输出
+# # print(sorted('hello'))     #['e', 'h', 'l', 'l', 'o']
+#
+# for i in reversed(atuple):
+#     print(i,end=',')        #90,66,29,69,34,58,75,40,97,96,
+#
+# print(list(reversed(atuple))) #[90, 66, 29, 69, 34, 58, 75, 40, 97, 96]
+#
+
+#####40-字符串方法
+
+# str = 'hello word!'
+# print(str.capitalize())         #Hello word!
+# print(str.title())
+#
+# print(str.center(15))           #居中
+# print(str.center(15,'#'))       #输出:##hello word!##
+# print(str.center(15),'#')       #普通输出:  hello word!   #
+#
+# print(str.ljust(15,'*'))        #字符串长度总共15字节,字符左对齐,少了右边用*补充
+#                     #hello word!****
+# print(str.rjust(15,'*'))        #字符串长度总共15字节,字符右对齐,少了左边用*补充
+#                     #****hello word!
+#
+# print(str.count('l'))           #统计字符串中'l'出现的次数
+
+# str = 'hello word!'
+# print(str.endswith('!'))        #True   是否是'!'结尾
+# print(str.endswith('a'))        #False
+# print(str.startswith('h'))      #True   是否是'h'开头
+# print(str.startswith('b'))      #False
+
+# print(str.islower())               #True     判断是否全是小写
+# print(str.isupper())               #False    判断是否全是大写
+# print('adff'.islower())            #True   直接判断是否全是小写
+# print('asdf'.isupper())            #False  直接判断是否全是大写
+
+# print('hao123'.isdigit())           #False       判断是否全是数字
+# print('123456'.isdigit())           #True        判断是否全是数字
+
+# a_1 = '  hello\t '
+# print(a_1)
+# print(a_1.strip())                  #去掉两边空白字符,包括\t,\n
+# print(a_1.lstrip())                 #去掉左边空白字符,包括\t,\n
+# print(a_1.rstrip())                 #去掉右边空白字符,包括\t,\n
+# print('  hello\t '.strip())                #可直接使用
+##输出如下:
+#   hello
+# hello
+# hello
+#   hello
+# hello
+
+# a_2 = 'how are you?'
+# print(a_2.split())
+# a_3 = 'how_are_you'
+# print(a_3.split('_'))
+#
+# a_4 = ['how', 'are', 'you']
+# print('.'.join(a_4))            #输出:how.are.you
+#############################################
+
+###41-字符串格式化
+# print('%s is %s years old' % ('zdd', 20))
+# print('%s is %d years old' % ('zdd',21.5))  #21.5输出的是21,,%d是整数
+# print('%s is %f years old' % ('zdd',21.5))  #21.5输出的是21.500000  %f是浮点数
+# print('%s is %1.4f years old' % ('zdd',21.5))  #21.5输出的是21.50  %5.2f 5是宽度,2是小数位数
+
+# print('97 is %c' % 97)  #转成字符输出:a
+# print('98 is %c' % 98)  #转成字符输出:b
+# print('99 is %c' % 99)  #转成字符输出:c
+# # #输出:
+# # 97 is a
+# # 98 is b
+# # 99 is c
+#
+# print('11 is %#o' % 11) # %#o表示有前缀的8进制
+#
+# print('%10s %5s' % ('name' , 'age'))   # 常用 右对齐字符宽度10 和 5
+# print('%-10s %-5s' % ('name' , 'age'))   # 常用 左对齐字符宽度10 和 5
+# # #输出
+#       name   age
+# name       age
+#
+# print('{} is {} years old'.format('bob',25) )
+# print('{1} is {0} years old'.format(25,'bob'))
+# print('{:<10}{:<8}'.format('name','age'))
+# print('{:>10}{:>8}'.format('name','age'))
+#输出
+# bob is 25 years old
+# bob is 25 years old
+# name      age
+#       name     age
+#
+####42-shutil模块常用方法
+
+import shutil
+# with open('/test/passwd' , 'rb') as fobj:
+#     with open('/test/passwd.txt' , 'wb') as dfobj:
+#         shutil.copyfileobj(fobj,dfobj)
+
+# shutil.copyfile('/test/passwd.txt' , '/test/123.txt')
+# shutil.copy('/test/passwd.txt' , '/test/a/')
+# shutil.copy2('/test/passwd' , '/test/a')
+# shutil.move('/test/123.txt' , '/test/a' )
+# shutil.copytree('/test' , '/test2/')
+# shutil.rmtree('/test/a')
+# shutil.copymode('/etc/shadow', '/test/123.txt')
+# 将123.txt的元数据设置成与/etc/shadow一样
+# 元数据使用stat /etc/shadow查看
+
+shutil.copystat('/etc/shadow', '/tmp/mima2.txt')
+shutil.chown('/tmp/mima2.txt', user='zhangsan', group='zhangsan')
 
 
 ###47--列表练习：模拟栈操作
@@ -612,10 +808,6 @@
 #         fullback(src,dst,md5)
 #     else:
 #         incrback(src,dst,md5)
-
-
-
-
 
 
 
