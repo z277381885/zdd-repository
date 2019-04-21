@@ -612,8 +612,7 @@
 #       name     age
 #
 ####42-shutil模块常用方法
-
-import shutil
+# import shutil
 # with open('/test/passwd' , 'rb') as fobj:
 #     with open('/test/passwd.txt' , 'wb') as dfobj:
 #         shutil.copyfileobj(fobj,dfobj)
@@ -628,8 +627,141 @@ import shutil
 # 将123.txt的元数据设置成与/etc/shadow一样
 # 元数据使用stat /etc/shadow查看
 
-shutil.copystat('/etc/shadow', '/tmp/mima2.txt')
-shutil.chown('/tmp/mima2.txt', user='zhangsan', group='zhangsan')
+# shutil.copystat('/etc/shadow', '/tmp/mima2.txt')
+# shutil.chown('/tmp/mima2.txt', user='zhangsan', group='zhangsan')
+
+###43-生成文本文件
+# import os
+# def get_fname():
+#
+#     while True:
+#         fname = input('请输入文件名：')
+#         if not os.path.exists(fname):
+#             break
+#         print('%s 文件已存在，请重新输入：' % fname)
+#     return fname
+#
+# def get_content():
+#     content = []
+#     print('请输入内容，另起一行输入end结束')
+#     while True:
+#         a = input('>')
+#         if a == 'end':
+#             break
+#         content.append(a)
+#     return content
+#
+# def get_wfile(fname,content):
+#     with open(fname ,'w') as fobj:
+#         fobj.writelines(content)
+#
+# if __name__ == '__main__':
+#     fname = get_fname()
+#     content = get_content()
+#     content = [line + '\n' for line in content]
+#     get_wfile(fname,content)
+
+###44-列表方法
+# alist = [1,2,3,'bob',3,'alice',3]
+# alist[0] = 10
+# print(alist)
+# print(alist[1:100])
+# alist.append('zdd')
+# print(alist)
+# alist.remove(2)
+# print(alist)
+# print(alist.index(3,4))     #从alist[4]开始往后搜索，返回3的下标
+# print(alist.insert(3,10))
+# print(alist)
+# blist = alist.copy()
+# blist = alist
+# print(blist)
+# print(blist)
+# print(alist.pop())
+# print(alist)
+# print(alist.pop(alist[2]))          #弹出是从后往前弹出
+# print(alist)
+# alist.pop()
+# alist = [1,2,3,4,3,5,3]
+# alist.sort()
+# print(alist)
+# alist.reverse()
+# print(alist)
+# print(alist.count(3))
+# # alist.clear()
+# print(alist)
+# alist.append('new')
+# print(alist)
+# clist = [10,20,30]
+# alist.extend(clist)         #将列表clist汇入alist列表
+# print(alist)
+# alist.extend('end')         #将'e' 'n' 'd'汇入到alist
+# print(alist)
+# alist.extend(['hello','world'])     #将['hello','world']汇入alist
+# print(alist)
+
+####45-检查合法字符
+# import keyword
+# import string
+#
+# def chckid(str):
+#
+#     if  keyword.iskeyword(str):
+#         print('%s:this is keyword' % str)
+#         exit()
+#     if str[0] not in a:
+#         print('%s 第一个字符不合法' % str)
+#         exit()
+#
+#     for i in list(str):
+#         # print(list(str))
+#         # print(i)
+#         if i not in b:
+#             print('%s 中的 %s is not hefa' % (str, str[str.index(i)]) )
+#
+# if __name__ == '__main__':
+#     a = string.ascii_letters + '_'
+#     b = a + string.digits
+#     print(a)
+#     str = input('输入标识符：')
+#     chckid(str)
+####46-创建用户设置随机密码
+import random
+import string
+import os
+import subprocess
+
+def pd(user):
+    rc = subprocess.call('id %s' % user , shell=True)
+    if rc:
+        print('用户不存在')
+        print(rc)
+        rb = subprocess.call('useradd %s' % user , shell=True)
+        if rb:
+            print('%s 用户创建不成功' % user)
+            exit()
+        else:
+            print('%s 用户创建成功' % user)
+    else:
+        print('无此用户')
+        print(rc)
+        exit()
+
+    n = int(input('请输入要设置的密码长度：'))
+    spasswd(n,user)
+
+def spasswd(n, user):
+    a =  string.digits + string.ascii_letters
+    passwd = ''
+    for i in range(n):
+        passwd +=  random.choice(a)
+    print(passwd)
+    subprocess.run('echo %s | passwd --stdin %s' % (passwd,user), shell=True)
+
+if __name__ == '__main__':
+    user = (input('please input user:'))
+    pd(user)
+
 
 
 ###47--列表练习：模拟栈操作
