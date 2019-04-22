@@ -726,41 +726,41 @@
 #     str = input('输入标识符：')
 #     chckid(str)
 ####46-创建用户设置随机密码
-import random
-import string
-import os
-import subprocess
-
-def pd(user):
-    rc = subprocess.call('id %s' % user , shell=True)
-    if rc:
-        print('用户不存在')
-        print(rc)
-        rb = subprocess.call('useradd %s' % user , shell=True)
-        if rb:
-            print('%s 用户创建不成功' % user)
-            exit()
-        else:
-            print('%s 用户创建成功' % user)
-    else:
-        print('无此用户')
-        print(rc)
-        exit()
-
-    n = int(input('请输入要设置的密码长度：'))
-    spasswd(n,user)
-
-def spasswd(n, user):
-    a =  string.digits + string.ascii_letters
-    passwd = ''
-    for i in range(n):
-        passwd +=  random.choice(a)
-    print(passwd)
-    subprocess.run('echo %s | passwd --stdin %s' % (passwd,user), shell=True)
-
-if __name__ == '__main__':
-    user = (input('please input user:'))
-    pd(user)
+# import random
+# import string
+# import os
+# import subprocess
+#
+# def pd(user):
+#     rc = subprocess.call('id %s' % user , shell=True)
+#     if rc:
+#         print('用户不存在')
+#         print(rc)
+#         rb = subprocess.call('useradd %s' % user , shell=True)
+#         if rb:
+#             print('%s 用户创建不成功' % user)
+#             exit()
+#         else:
+#             print('%s 用户创建成功' % user)
+#     else:
+#         print('无此用户')
+#         print(rc)
+#         exit()
+#
+#     n = int(input('请输入要设置的密码长度：'))
+#     spasswd(n,user)
+#
+# def spasswd(n, user):
+#     a =  string.digits + string.ascii_letters
+#     passwd = ''
+#     for i in range(n):
+#         passwd +=  random.choice(a)
+#     print(passwd)
+#     subprocess.run('echo %s | passwd --stdin %s' % (passwd,user), shell=True)
+#
+# if __name__ == '__main__':
+#     user = (input('please input user:'))
+#     pd(user)
 
 
 

@@ -2310,7 +2310,7 @@
 
 #####re模块
 
-import re
+# import re
 #match函数:从字符串开头开始匹配,匹配成功,则返回一个匹配对象,否则返回None
 # a = re.match('f..','food')          #从头开始匹配,
 # print(a)                            #输出:<_sre.SRE_Match object; span=(0, 3), match='foo'>
@@ -2851,6 +2851,7 @@ import re
 
 
 # ###扫描存活主机---函数方式(自己写)
+####在工具pycharm看不到效果,
 # import subprocess           #加载支持linux系统内部命令模块
 # import os
 # import collections
@@ -2860,11 +2861,11 @@ import re
 # # rc = subprocess.call('ping -c 2 192.168.1.254 &> /dev/null', shell=True)
 # # print(rc)
 #
-#
 # def ping(ip):
 #     # print('子进程调用ping函数测试主机:%s' % ip)
 #     # rc = subprocess.run('ping  -c 4 %s ' % ip, shell=True)
-#     rc = subprocess.call('ping  -c2 %s &>/dev/null' % ip, shell=True)
+#     rc = subprocess.call('ping  -c2 %s & > / dev / null' % ip, shell=True)
+#     #
 #
 #     if rc:
 #         print('%s:down' % ip)       #当re=1，执行
@@ -2886,7 +2887,7 @@ import re
 #         exit()
 #
 #     ips = [p_bs + '.%s' %  i for i in range(p_zjks,p_zjjw+1)]
-#     print(ips)
+#     # print(ips)
 #
 #     for p_zj in ips:
 #         retval = os.fork()        #fork产生子进程
@@ -2898,6 +2899,7 @@ import re
 # if __name__ == '__main__':
 #     show_menu()
 ############扫描存活主机---函数方式(达内网站case案例)
+#在工具pycharm看不到效果,
 # import subprocess                   #加载支持Linux系统内部命令模块
 # import os
 #                                     #定义函数，允许ping任何主机，ping函数需要给IP作为参数
@@ -2918,6 +2920,244 @@ import re
 #         if not pid:                 # 子进程负责调用ping函数
 #             ping(ip)
 #             exit()        # 子进程ping完一个地址后结束，不要再循环
+#
+#
+#################扫描存活主机-老师的方式forfping2.py
+# #在工具pycharm看不到效果,
+# import subprocess
+# import os
+#
+# def ping(host):
+#     rc = subprocess.run('ping -c2 %s  &>/dev/null ' % host , shell=True)
+#     if rc.returncode == 0:
+#         print('%s:up' % host)
+#     else:
+#         print('%s:down' % host)
+#
+#
+# if __name__ == '__main__':
+#     ip_all = ['176.52.8.%s' % i for i in range(1,255)]
+#
+#     for ip in ip_all:
+#         retval = os.fork()
+#
+#         if not retval:
+#             ping(ip)
+#             # print('子进程')
+#             exit()
+
+
+#########os.waitpid子进程处理
+
+# import os
+# import time
+#
+# print('start')
+# retval =  os.fork()
+# if retval:
+#     print('父进程')
+#
+#     result = os.waitpid(-1,0)   #挂起父进程,子进程变成僵尸进程,处理后才继续向下执行print(result)
+#     print(result)               #输出(26364, 0)
+# else:
+#     print('子进程')
+#     time.sleep(10)
+#     exit()
+#
+# time.sleep(5)
+# print('Done')
+#
+# ###
+#
+# import os
+# import time
+#
+# print('start')
+# retval =  os.fork()
+# if retval:
+#     print('父进程')
+#
+#     result = os.waitpid(-1,1)   #不挂起父进程,直接向下执行print(result)
+#     print(result)               #输出(26364, 0)
+# else:
+#     print('子进程')
+#     time.sleep(10)
+#     exit()
+#
+# time.sleep(1)
+# print('Done')
+
+###多线程
+# import threading
+# import time
+#
+# def say_hi():
+#     print('ni hao')
+#     time.sleep(5)
+#
+#     print('wo hao ')
+#
+# if __name__ == '__main__':
+#     print('开始')
+#
+#     t1 = threading.Thread(target = say_hi)  #创建工作线程,,调用say_hi函数
+#     t1.start()
+#
+#     t2 = threading.Thread(target = say_hi)
+#     t2.start()
+###输出如下
+# 开始
+# ni hao
+# ni hao
+# wo hao            #运行5秒后再出现
+# wo hao            #运行5秒后再出现
+###
+###多线程传参
+# import threading
+# import time
+#
+# def say_hi(n=3):
+#     print('ni hao')
+#     time.sleep(n)
+#
+#     print('wo hao ')
+#
+# if __name__ == '__main__':
+#     print('开始')
+#
+#     t1 = threading.Thread(target = say_hi)  #创建工作线程,,调用say_hi函数
+#     t1.start()
+#
+#     t2 = threading.Thread(target = say_hi,args=(7,))
+#     t2.start()  #target(*args) --> target(7) -->say_hi(7)
+##输出如下
+# 开始
+# ni hao
+# ni hao
+# wo hao    #运行开始,3秒后出现
+# wo hao    #运行开始,7秒后出现
+
+###扫描存活主机--多线程方式
+# #在工具pycharm看不到效果,
+# import subprocess
+# import os
+# import threading
+#
+# def ping(host):
+#     rc = subprocess.run('ping -c2 %s  &>/dev/null ' % host , shell=True)
+#     if rc.returncode == 0:
+#         print('%s:up' % host)
+#     else:
+#         print('%s:down' % host)
+#
+#
+# if __name__ == '__main__':
+#     ip_all = ['176.52.8.%s' % i for i in range(1,255)]
+#
+#     for ip in ip_all:
+#         t = threading.Thread(target=ping , args=(ip,))
+#         t.start()
+
+#####扫描存活主机--线程+oop方式
+# import subprocess
+# import os
+# import threading
+#
+# class Ping:
+#     def __init__(self,host):
+#         self.host = host
+#
+#
+#     def __call__(self):
+#         rc = subprocess.run('ping -c2 %s &>/dev/null' % self.host ,  shell=True)
+#         if rc.returncode == 0:
+#             print('%s : up' % self.host)
+#         else:
+#             print('%s : down' % self.host)
+#
+# if __name__ == '__main__':
+#     iplist = ['176.52.8.%s' % i  for i in range(1,255)]
+#     for ip in iplist:
+#         t = threading.Thread(target=Ping(ip))  #创建一句Ping的类创建target实例
+#         t.start()       #实际是执行target()
+
+###多线程---join
+# import threading
+# import time
+# def say_hi(n=3):
+#     print('hello world')
+#     time.sleep(n)
+#     print('done')
+#
+# if __name__ == '__main__':
+#     print('start')
+#     t1 = threading.Thread(target=say_hi)
+#     t1.start()
+#     t1.join()
+#     t2 = threading.Thread(target=say_hi,args=(7,))
+#     t2.start()
+###输出如下
+# start
+# hello world
+# done              #睡眠三秒后出现
+# hello world       #上面执行完之后出现
+# done              #上一步出现后,再睡眠7秒后出现
+
+###单进程,多进程,多线程
+# import time
+# import threading
+# import os
+#
+# def myadd():
+#     result = 0
+#     for i in range(1,20000001):
+#         result += i
+#     print(result)
+#
+#
+# if __name__ == '__main__':
+# ####单进程:代码交给一个CPU运行
+#     start1 = time.time()
+#     for i in range(2):
+#         myadd()
+#     end1 = time.time()
+#     print(end1 - start1)
+#     print()
+#
+# #####多进程:代码分配给多个cpu运算
+#     start2 = time.time()
+#     for i in range(2):
+#         retval = os.fork()
+#         if not retval:
+#             myadd()
+#             exit()
+#     for i in range(2):
+#         os.waitpid(-1,0)
+#     end2 = time.time()
+#     print(end2 - start2)
+#     print()
+# #####多线程,
+#     start3 = time.time()
+#     t1 = threading.Thread(target=myadd)
+#     t1.start()
+#     t2 = threading.Thread(target=myadd)
+#     t2.start()
+#     t1.join()
+#     t2.join()
+#     end3 = time.time()
+#     print(end3 - start3)
+#     print()
+###多线程运行速度与单进程速度差不多的原因是:GIL全局解释器锁限制了
+###python是一个解释器, 它负责把程序代码发送到cpu,由于GIL的限制,python解释器某一个时刻只允许运行一个线程
+
+
+
+
+
+
+
+
+
 
 
 
