@@ -3058,7 +3058,7 @@
 #         t = threading.Thread(target=ping , args=(ip,))
 #         t.start()
 
-#####扫描存活主机--线程+oop方式
+####扫描存活主机--线程+oop方式
 # import subprocess
 # import os
 # import threading
