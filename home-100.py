@@ -761,8 +761,8 @@
 # if __name__ == '__main__':
 #     user = (input('please input user:'))
 #     pd(user)
-
-
+#
+#
 
 ###47--列表练习：模拟栈操作
 # import sys
@@ -801,6 +801,122 @@
 #
 # if __name__ == '__main__':
 #     manu()
+#
+#
+###48- 实现linux系统中的unix2dos功能
+
+# import sys
+#
+# def unix2dos(a_fname):
+#     # d = '/root/桌面/'
+#     b_fname = a_fname+'.txt'
+#
+#     with open(a_fname) as a_fobj:
+#         with open(b_fname,'w') as b_fobj:
+#             for a_line in a_fobj:
+#                 b_line = a_line.rstrip() + '\t\n'
+#                 b_fobj.write(b_line)
+#
+# if __name__ == '__main__':
+#     unix2dos(sys.argv[1])
+
+###49--动画程序,@从一行#中穿过
+
+import time
+# qian = 0
+# hou = 20
+#
+# while True:
+#     print('\r%s%s%s' % ('#'*qian,'@','#'*hou),end='')
+#     qian +=1
+#     hou -=1
+#     time.sleep(1)
+#     if qian == 20:
+#         qian = 0
+#         hou = 20
+#简书案例##
+# length = 19
+# count = 0
+#
+# while True:
+#     print('\r%s@%s' % ('#' * count, '#' * (length - count)), end='')
+#     try:
+#         time.sleep(0.3)
+#     except KeyboardInterrupt:
+#         print('\nBye-bye')
+#         break
+#     if count == length:
+#         count = 0
+#     count += 1
+
+###50-字典基础案例
+
+# adict = dict(['ab', 'cd','你好'])  # {}
+# # print(adict)
+#
+# bdict = dict([('name', 'bob'),('age', 25)])
+# bdict['email'] = 'zdd@123'
+# print(bdict)
+
+# bdict['name']= 'zdd'
+
+# print(bdict)
+# print('%(name)s : %(email)s' % bdict)
+# del bdict['email']
+# print(bdict.values())
+#
+#
+# cdict = {}.fromkeys(['zhangsan', 'lisi', 'wangwu'], 11)
+# print(cdict)
+# for i in cdict:
+#     print('%s:%s' % (i , cdict[i]))
+#     print(i)
+
+###51--字典常用方法
+# adict = dict([('name', 'bob'),('age', 25)])
+# print(len(adict))
+# # hash(adict)
+# print(hash('abc'))
+# print(adict.keys())
+# print(adict.values())
+# print(adict.items())
+
+# print(adict.get('email','not found'))
+# adict.update({'phone':'123456'})
+# print(adict)
+# adict['email'] = 'zdd@123'
+# print(adict)
+
+
+###52
+# myset = set ('hello')
+# print(myset)
+# print(len(myset))
+# for ch in myset:
+#     print(ch)
+
+aset = set('abc')
+bset = set('bcd')
+#
+# print(aset & bset)
+# print(aset.intersection(bset))
+# print(aset | bset)
+# print(aset - bset)
+# print(bset - aset)
+# print(aset | aset)
+
+aset.add('new')
+print(aset)
+aset.update(['aaa','bbb'])
+print(aset)
+aset.remove('bbb')
+print(aset)
+
+
+
+
+
+
 
 ###记账本
 #! /usr/bin/env python
