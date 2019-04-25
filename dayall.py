@@ -3058,7 +3058,7 @@
 #         t = threading.Thread(target=ping , args=(ip,))
 #         t.start()
 
-####扫描存活主机--线程+oop方式
+####扫描存活主机--多线程+oop方式
 # import subprocess
 # import os
 # import threading
@@ -3142,17 +3142,38 @@
 #     t1.start()
 #     t2 = threading.Thread(target=myadd)
 #     t2.start()
-#     t1.join()
-#     t2.join()
+#     t1.join()             #等待t1子线程结束
+#     t2.join()             #等待t2子线程结束
 #     end3 = time.time()
 #     print(end3 - start3)
 #     print()
 ###多线程运行速度与单进程速度差不多的原因是:GIL全局解释器锁限制了
 ###python是一个解释器, 它负责把程序代码发送到cpu,由于GIL的限制,python解释器某一个时刻只允许运行一个线程
 
+#####天气预报
+# 天气预报：
+# 实况天气: http://www.weather.com.cn/data/sk/城市代码.html
+# 城市信息: http://www.weather.com.cn/data/cityinfo/城市代码.html
+# 详细指数: http://www.weather.com.cn/data/zs/城市代码.html
+# 搜索 中国天气网 城市代码 ，可以得到全国各地区的代码
+# 如：http://www.weather.com.cn/data/sk/101010100.html
 
+# from urllib import request
+# import json
+# #
+# # r = request.urlopen('http://www.weather.com.cn/data/sk/101010100.html')
+# # data = r.read()
+# # # print(data)
+# # print(json.loads(data))
+# # wdict = json.loads(data)
+# # print(wdict)
+# # # print(wdict['weatherinfo']['city'])
+# #
+#
+# print('a')
 
-
+# import requests
+# r = requests.get('http://www.sogou.com')
 
 
 
