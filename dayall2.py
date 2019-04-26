@@ -56,11 +56,69 @@
 
 
 #####--查快递——
-url = 'http://www.kuaidi100.com/query?type=%s&postid=%s'
+
+
+#'http://www.kuaidi100.com/query?type=%s&postid=%s'
+url = 'http://www.kuaidi100.com/query'
 params = {'type': 'youzhengguonei', 'postid': '9893442769997'}
 r = requests.get(url,params=params)
 result = r.json()
 print(result)
+
+# a = '123'
+# print(eval(a))
+# print(type(eval(a))) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,0 +1,147 @@
+requests模块
+1、常用方法
+requests.get()
+requests.post()
+2、传递参数
+http://www.kuaidi100.com/query?type=shentong&postid=12345678
+url = 'http://www.kuaidi100.com/query'
+params = {'type': 'shengtong', 'postid': '12345678'}
+r = requests.get(url, params=params)
+3、传递post提交的数据，不会出现在url地址栏上
+url = 'http:/xxxx.xxxx.com'
+data = {'username': 'xxx', 'password': 'xxxxx'}
+r = requests.post(url, data=data)
+
+钉钉机器人：
+1、搜索 钉钉开放平台，找到开发者手册地址：
+https://open-doc.dingtalk.com/
+点击“移动应用接入”，再从右上角搜索“自定义机器人”
+2、在钉钉中创建一个群，添加群聊机器人，类型是webhook，
+将群聊机器人的webhook网址复制下来，这个是机器人聊天的授权地址
+
+
+
+zabbix编程
+1、编写监控插件
+# pip3 install psutil
+>>> import psutil
+>>> psutil.sensors_temperatures()
+>>> temps = psutil.sensors_temperatures()  # 返回字典
+# key是coretemp的val是列表，取出列表第一项是第一颗CPU的温度
+>>> cpu0_temp = temps['coretemp'][0]
+第一颗CPU的信息是个object，它有很多属性
+>>> print('%s: %s' % (cpu0_temp.label, cpu0_temp.current))
+
+>>> psutil.sensors_fans()  # 风扇信息
+
+2、zabbix官方手册
+https://www.zabbix.com/documentation/3.4/zh/manual
+找到19.API
+
+
+>>> class CPU:
+...     def __init__(self, core, temp):
+...         self.core = core
+...         self.temp = temp
+...     def __str__(self):
+...         return 'cpu_temp(core: %s, temp: %s)' % (self.core, self.temp)
+>>> c1 = CPU(0, 42)
+>>> print(c1)
+cpu_temp(core: 0, temp: 42)
+>>> c1.core
+0
+>>> c1.temp
+42
+
+
+adict = {'key1': [c1]}
+>>> print(adict['key1'][0])
+cpu_temp(core: 0, temp: 42)
+>>> mylist = adict['key1']
+>>> mylist[0]
+>>> print(mylist[0])
+cpu_temp(core: 0, temp: 42)
+
+
+
+zabbix api：
+示例zabbix地址是http://192.168.4.2/zabbix
+所以api地址是：http://192.168.4.2/zabbix/api_jsonrpc.php
+
+
+CI/CD: 持续集成/持续交付
+
+编译执行：C / go
+解释执行：python / php / shell
+
+jenkins: 实现CI
+下载、编译程序
+
+配置node4成为jenkins服务器
+1、node4.tedu.cn  eth0: 192.168.4.4   eth1:自动获得，连接default网络
+(1) node4的第二块网卡采连接到default网络
+(2) 删除virbr0网桥
+[root@node4 ~]# ifconfig virbr0 down
+[root@node4 ~]# brctl delbr virbr0
+(3) 配置IP
+[root@node4 ~]# LANG=C nmtui
+Edit a connection -> Add -> Ethernet -> Profile name: eth1; Device: eth1
+-> OK
+[root@node4 ~]# ifup eth1
+2、安装
+拷贝jenkins rpm包到node4
+[root@node4 ~]# rpm -ihv jenkins-2.138.2-1.1.noarch.rpm
+
+3、配置jenkins
+jenkins是java程序，需要安装java
+# yum install -y java
+[root@node4 ~]# systemctl start jenkins
+[root@node4 ~]# systemctl enable jenkins
+访问 http://192.168.4.4:8080
+按向导初始化。其中安装插件时，什么也不要选择。“选择插件来安装” -> “无”
+“创建第一个管理员”界面，选择右下角“使用admin账号登陆” -> 保存并完成
+进入管理页面后，点击右上角的admin -> 左侧的设置 -> 修改密码
+
+4、安装插件
+(1) 使用国内镜像
+首页 -> 系统管理 -> 插件管理 -> 高级 -> 升级站点:
+https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json
+-> 提交
+(2) 安装插件
+可选插件 -> git parameter -> 直接安装 -> 安装完成后重启Jenkins(空闲时)
+(3) 在jenkins服务器上安装git
+[root@node4 ~]# yum install -y git
+
+(4)如果在线安装不上，可以先下载，下载网址是：
+http://updates.jenkins-ci.org/download/plugins/git-parameter/
+下载后，在首页 -> 系统管理 -> 插件管理 -> 高级 -> 上传插件
+
+
+上线流程：
+1、程序员编写代码
+[root@room8pc16 day05]# git init /tmp/myweb
+[root@room8pc16 day05]# cd /tmp/myweb
+[root@room8pc16 myweb]# echo '<h1>Hello World</h1>' > index.html
+[root@room8pc16 myweb]# git add .
+[root@room8pc16 myweb]# git commit -m "myweb version 1.0"
+[root@room8pc16 myweb]# git tag 1.0  # 标记此时的版本号为1.0版本
+[root@room8pc16 myweb]# git tag  # 查看版本
+1.0
+1.0开发完毕后，继续开发新版本
+[root@room8pc16 myweb]# echo '<h2>my web 2.0</h2>' >> index.html
+[root@room8pc16 myweb]# git add .
+[root@room8pc16 myweb]# git commit -m "my web 2.0"
+[root@room8pc16 myweb]# git tag 2.0  # 标记此时的版本号为2.0版本
+2、代码推送到gitlab服务器
+
+
+
+
+
+
+
+
+
+
+
+
