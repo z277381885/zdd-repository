@@ -3160,26 +3160,23 @@
 
 # from urllib import request
 # import json
-# #
-# # r = request.urlopen('http://www.weather.com.cn/data/sk/101010100.html')
-# # data = r.read()
-# # # print(data)
-# # print(json.loads(data))
-# # wdict = json.loads(data)
-# # print(wdict)
-# # # print(wdict['weatherinfo']['city'])
-# #
+#
+# r = request.urlopen('http://www.weather.com.cn/data/sk/101010100.html')
+# data = r.read()
+# # print(data)
+# print(json.loads(data))
+# wdict = json.loads(data)
+# print(wdict)
+# # print(wdict['weatherinfo']['city'])
+#
 #
 # print('a')
-
+#
 # import requests
 # r = requests.get('http://www.sogou.com')
 
 
 
-
-
-
-
-
+a = 40-3**2+11//3**2*8
+print(a)
 

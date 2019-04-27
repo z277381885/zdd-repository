@@ -133,11 +133,70 @@ http://updates.jenkins-ci.org/download/plugins/git-parameter/
 [root@room8pc16 myweb]# git commit -m "my web 2.0"
 [root@room8pc16 myweb]# git tag 2.0  # 标记此时的版本号为2.0版本
 2、代码推送到gitlab服务器
+(1) 启动gitlab服务器
+(2) 在名为devops的group下创建项目myweb，可见等级为公开
+(3) 在myweb项目中授权用户是主程序员角色
+(4) 上传代码到gitlab服务器
+[root@room8pc16 myweb]# cd /tmp/myweb/
+# git remote rename origin old-origin
+如果出现以下报错，可以忽略
+error: 不能重命名配置小节 'remote.origin' 到 'remote.old-origin'
+# git remote add origin http://192.168.4.1/devops/myweb.git
+# git push -u origin --all   # 推送所有的确认
+# git push -u origin --tags  # 推送所有的tag
+
+3、jenkins拉取gitlab上的代码
+创建自由风格的软件项目 -> 参数化构建过程 -> 添加参数选git parameter
+-> name: webver, parameter type: tag, Default Value: origin/master
+-> 源码管理 -> Repository URL: http://192.168.4.1/devops/myweb.git
+-> Branches to build: $webver ->保存
+执行工程，拉取代码：Build with Parameters -> 选择1.0后构建
+-> 左下角的Build History，成功显示蓝球，失败是红球
+4、查看拉取下来的代码：
+[root@node4 ~]# ls /var/lib/jenkins/workspace/
+
+5、为了方便应用服务器从jenkins上把代码下载过去，在jenkins上安装apache，把
+从gitlab上拉取的代码放到apache中用于下载
+[root@node4 ~]# yum install -y httpd
+[root@node4 ~]# systemctl start httpd
+[root@node4 ~]# systemctl enable httpd
+6、创建apache目录
+/var/www/html/deploy: 存储版本文件
+/var/www/html/deploy/live_ver：最新版本文件
+/var/www/html/deploy/last_ver：前一个版本文件
+/var/www/html/deploy/packages/: 存储压缩后的软件包和它的md5值
+[root@node4 ~]# mkdir -p /var/www/html/deploy/packages/
+[root@node4 ~]# chown -R jenkins:jenkins /var/www/html/deploy/
+
+7、修改jenkins工程
+(1) 将check out的版本放到子目录中
+在源码管理下面，Additional Behaviours -> check out to a sub-directory
+-> Local subdirectory for repo: myweb-$webver
+# ls /var/lib/jenkins/workspace/myweb/
+(2) 将软件打包放到apache相关目录下
+构建 -> 增加构建步骤 -> 执行shell
+deploy_dir=/var/www/html/deploy
+cp -r myweb-$webver $deploy_dir/packages/
+cd $deploy_dir/packages
+rm -fr myweb-$webver/.git
+tar czf myweb-$webver.tar.gz myweb-$webver
+rm -rf myweb-$webver
+md5sum myweb-$webver.tar.gz | awk '{print $1}' > myweb-$webver.tar.gz.md5
+cd $deploy_dir
+[ -f live_ver ] && cat live_ver > last_ver
+echo $webver > live_ver
 
 
-
-
-
+在应用服务器上部署软件
+1、检查是否有新版本
+如果本地没有版本文件，或本地版本比jenkins上的版本低
+2、有新版本则下载相应的压缩包
+3、校验压缩包，检查下载的压缩包是否损坏
+4、如果压缩包没有损坏，则部署
+将压缩包解压到deploy目录下，创建到解压目录的链接
+5、路径规划
+/var/www/download/: 存储下载的压缩包和md5文件
+/var/www/deploy/: 存储live_ver和解压后的软件目录
 
 
 

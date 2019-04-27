@@ -158,7 +158,7 @@ data = {
 
 
 r = requests.post(url,headers=headers , data = json.dumps(data))
-print(r.json())         #返回值,result部分为主要信息
+print(r.json())         #返回值,result部分为主要信息获取
 
 
 
