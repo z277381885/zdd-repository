@@ -103,6 +103,102 @@ autocmd FileType yaml setlocal sw=2 ts=2 et ai   # 只有yaml文件生效的配�
 [root@room8pc16 myansible]# ansible-playbook lamp.yml
 
 
+ansible编程
+https://docs.ansible.com/  -> Ansible Documentation搜索python api
+将example代码拷贝
+
+命名的元组：
+1、还是元组，具有元组的特性，执行元组相关的操作
+2、为元组的下标命名
+>>> from collections import namedtuple
+>>> Point = namedtuple('Point', ['x', 'y', 'z'])
+>>> a = Point(10, 15, 8)
+>>> len(a)
+3
+>>> a[0]
+10
+>>> a[1:]
+(15, 8)
+>>> a.x
+10
+>>> a.y
+15
+>>> a.z
+8
+
+
+yaml文件格式能够解释成python的数据类型，如把lamp.yml改为python数据类型如下：
+[
+    'name': 'configure dbservers',
+    'hosts': 'dbservers',
+    'tasks:
+        [
+            'name': 'install mariadb',
+            'yum': {
+                'name': 'mariadb-server',
+                'state': 'latest'
+            }
+        ],
+        [
+            'name': 'start mariadb'
+            'service': {
+                'name': 'mariadb',
+                'state': 'started',
+                'enabled': 'yes'
+            }
+        ]
+]
+
+
+
+编写ansible模块
+1、创建自定义模块路径
+[root@room8pc16 day06]# mkdir mylibraby
+# export ANSIBLE_LIBRARY=/var/ftp/nsd_2018/nsd1811/devops/day06/mylibraby
+# mylibraby/mycopy.py
+from ansible.module_utils.basic import AnsibleModule
+import shutil
+
+def main():
+    module = AnsibleModule(
+        argument_spec=dict(
+            yuan=dict(required=True, type='str'),
+            mudi=dict(required=True, type='str')
+        )
+    )
+    shutil.copy(module.params['yuan'], module.params['mudi'])
+    module.exit_json(changed=True)
+
+if __name__ == '__main__':
+    main()
+2、测试
+# ansible webservers -m mycopy -a "yuan=/etc/hosts mudi=/tmp/zhuji.txt"
+
+
+手工安装python模块
+1、在物理机上下载wget模块
+# pip download wget --trusted-host mirrors.163.com
+2、拷贝到远程
+# ansible webservers -m copy -a "src=files/wget-3.2.zip dest=/root"
+3、在远程主机上执行安装
+[root@node5 ~]# unzip wget-3.2.zip
+[root@node5 ~]# cd wget-3.2/
+[root@node5 wget-3.2]# python setup.py install
+
+
+ansible-cmdb: 将收集下来的主机信息以web形式展现
+1、收集主机信息
+[root@room8pc16 myansible]# # ansible all -m setup --tree /tmp/out/
+[root@room8pc16 myansible]# # ls /tmp/out/
+2、安装ansible-cmdb
+# cd ansible-cmdb_pkgs/
+[root@room8pc16 ansible-cmdb_pkgs]# pip3 install *
+[root@room8pc16 ~]# vim $(which ansible-cmdb)
+PY_BIN=$(which python3)   # 修改第8行
+[root@room8pc16 myansible]# # ansible-cmdb /tmp/out/ > /tmp/hosts.html
+[root@room8pc16 myansible]# firefox /tmp/hosts.html
+
+
 
 
 

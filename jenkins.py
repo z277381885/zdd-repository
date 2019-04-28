@@ -28,7 +28,7 @@ def has_error(fname,md5_url):
                 break
             m.update(data)
 
-    r = requests.get(md5_url)
+    r = requests.get(md5_url)           #
     if m.hexdigest() == r.text.strip():
         return False
     return True
