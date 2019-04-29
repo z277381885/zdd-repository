@@ -1,0 +1,99 @@
+.box{
+    width:902px;
+    height:700px;
+    border:1px solid red;
+    margin:auto;   /*外边距上右下左*/
+}
+/*-------------------header------------------------------*/
+.header{
+    /*width:900px;*/
+    height:100px;
+    border:1px solid red;
+    margin:auto;            /*外边距:上右下左,围绕在元素边框周围的空白区域*/
+    /*padding: auto;          !*内边距:上右下左,内容区域与边框之间的空间*!*/
+}
+
+.header ul{
+    list-style-type: none;     /*取消列表前面的符号 点*/
+    padding: 5px;                 /*内部空间*/
+    margin: 0px;                  /*外部空间*/
+    /*float: left;*/
+}
+.header li{
+    float: left;
+}
+.header li a{
+    width:105px;            /*设置宽度*/
+    display: block;         /*使得这个变成块,高度宽等属性才会生效,点击范围增大*/
+}
+
+.header ul a:hover{
+    color: red;
+    background: cadetblue;
+}
+
+/*-------------------main------------------------------*/
+.main{
+    width:900px;
+    height:500px;
+    border:1px solid red;
+    margin:auto;
+}
+
+
+.left{
+    width:113px;
+    height:500px;
+    border:1px solid blue;
+    /*margin:auto;*/
+    float: left;            /*左浮动*/
+    font-size: 15px;
+    font-weight: bold;      /*字体加粗*/
+    font-style: italic;     /*字体倾斜*/
+    text-align: left;       /*文字对齐*/
+    text-decoration: underline;
+}
+.left ul{
+    list-style-type: none;     /*取消列表前面的符号 点*/
+    padding: 5px;                 /*内部空间*/
+    margin: 0px;                  /*外部空间*/
+}
+
+.left ul a {
+    width:105px;            /*设置宽度*/
+    display: block;         /*使得这个变成块,高度宽等属性才会生效,点击范围增大*/
+}
+
+.left ul a:hover{
+    color: red;
+    background: cadetblue;
+}
+.baidu{
+    background: chartreuse;
+}
+.center{
+    width:620px;
+    height:500px;
+    border:1px solid green;
+    /*margin-left:10px;*/
+    float:left;           /*右浮动*/
+    background-image: url("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2069212460,3177831115&fm=15&gp=0.jpg");
+    background-size:620px 500px;
+}
+.right{
+    width:160px;
+    height:500px;
+    border:1px solid blue;
+    /*margin-left:10px;*/
+    float:left;           /*右浮动*/
+}
+
+
+
+
+.footer{
+    width:900px;
+    height:96px;
+    border:1px solid red;
+    margin:auto;
+}
