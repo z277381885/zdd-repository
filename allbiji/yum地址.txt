@@ -1,0 +1,45 @@
+clone-vm7  pass:123456
+
+芙蓉路：ftp://176.53.40.169/   user:NSD1811  passwd:tarena
+
+东塘ftp://176.52.15.168
+东塘ftp://176.52.40.168:
+
+将本机nginx-1.12.2.tar.gz文档 拷贝到远程主机 172.25.0.11 的根目录里面
+scp /root/桌面/王凯PROJECT1/shell/nginx-1.12.2.tar.gz ssh root@172.25.0.11:/
+
+在本机拷贝192.168.4.11上的ceph.client.admin.keyring文件到本机/etc/ceph/目录
+scp 192.168.4.11:/etc/ceph/ceph.client.admin.keyring  /etc/ceph/
+
+[root@room9pc01 nsd_2018]# \cp -r nsd1811 /gitall/zdd-repository/
+cp 是别名,取消别名再复制
+
+pssh工具:
+python 工具写的,需要装python2.4以上 
+
+http://www.yunweipai.com   运维派
+https://leetcode.com/	  力扣
+https://leetcode-cn.com/   力扣中国
+https://juejin.im/	  掘金
+https://segmentfault.com/  
+
+博客园:
+https://www.cnblogs.com/chengd/
+http://www.cnblogs.com/wupeiqi
+
+git:地址
+https://github.com/Mrzhangzhg/nsd_2018.git	#张志刚
+git://124.207.192.18/nsd1811.git		#李欣
+https://github.com/z277381885/zdd-repository.git	#zdd
+
+达内全国qq群:783319382
+达内pythonqq群:552320360
+102800
+
+"(?<名称>表达式)"
+ip正则
+[0-9\.]+
+
+
+
+
