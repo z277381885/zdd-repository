@@ -1,0 +1,17 @@
+yum -y install rpm-build  #rpm-build 是rpm包制作软件
+
+yum -y install createrepo
+createrepo .	#创建yum源的repodata文件
+createrepo --update /var/ftp/localrepo #更新
+
+yum -y install git
+git clone git://124.207.192.18/nsd1811.git  #此地址是达内北京讲师李欣教学用
+
+第一次ssh不需要输入yes,并且免密登陆
+[root@mha ~]# vim /etc/ssh/ssh_config 
+Host *
+        GSSAPIAuthentication yes
+        StrictHostKeyChecking no
+[root@jumpserver localrepo]# scp /root/.ssh/id_rsa 192.168.1.20:/root/.ssh/
+
+
