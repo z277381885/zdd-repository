@@ -1,0 +1,112 @@
+SMTP：
+发送邮件可以分为两个步骤：准备邮件、发送邮件
+1、准备邮件使用email模块
+2、发送邮件使用smtplib模块
+
+
+
+JSON：可以在网络应用程序间传输各种各样的数据类型
+>>> import json
+>>> src = {'name': 'bob', 'age': 20}
+>>> json.dumps(src)
+'{"name": "bob", "age": 20}'
+>>> data = json.dumps(src)
+>>> type(data)
+>>> dst = json.loads(data)
+>>> type(dst)
+<class 'dict'>
+>>> dst
+{'name': 'bob', 'age': 20}
+
+
+中国天气网查询：
+实况天气:http://www.weather.com.cn/data/sk/城市代码.html
+城市信息获取:http://www.weather.com.cn/data/cityinfo/城市代码.html
+详细指数获取:http://www.weather.com.cn/data/zs/城市代码.html
+网上查询 中国天气网 城市代码
+
+http://www.weather.com.cn/data/sk/101010100.html
+http://www.weather.com.cn/data/cityinfo/101010100.html
+http://www.weather.com.cn/data/zs/101010100.html
+
+>>> from urllib import request
+>>> skurl = 'http://www.weather.com.cn/data/sk/101010100.html'
+>>> r = request.urlopen(skurl)
+>>> data = r.read()
+>>> bjsk = json.loads(data)
+>>> bjsk['weatherinfo']
+>>> bjsk['weatherinfo']['WD']
+>>> info = bjsk['weatherinfo']
+>>> info['WD']
+
+
+查快递：
+url = "http://www.kuaidi100.com/query?type=%s&postid=%s"
+type后面填写的是快递公司，postid是快递单号
+
+>>> url = 'http://www.kuaidi100.com/query?type=youzhengguonei&postid=9893442769997'
+>>> r = request.urlopen(url)
+>>> kd = r.read()
+>>> kd = json.loads(kd)   # kd是一个字典
+>>> info = kd['data']  # 字典中的data是一个列表，记录快递信息
+>>> info.reverse()  # 最早的信息是最后一项，反转一下
+>>> for info_dict in info:   # 列表中的每一项是字典，逐一取出每个字典
+...     print('%(time)s: %(context)s' % info_dict)
+
+
+requests:更高层次的http客户端库
+1、安装
+# cd requests_pkgs/
+[root@room8pc16 requests_pkgs]# pip3 install *
+2、应用
+>>> import requests
+(1) 获取文本内容
+>>> r = requests.get('http://www.163.com/')
+>>> r.text
+(2) 获取非文本内容(如图片、mp3等)
+>>> r = requests.get('https://www.cnblogs.com/images/cnblogs_com/jxxclj/1245877/o_pri1%20(1).png')
+>>> with open('/tmp/kd.png', 'wb') as fobj:
+...     fobj.write(r.content)
+(3) 获取json格式文本
+>>> r = requests.get('http://www.weather.com.cn/data/cityinfo/101010100.html')
+>>> r.json()    # 出现乱码
+>>> r.encoding  # 查看当前的字符编码
+'ISO-8859-1'
+>>> r.encoding = 'utf8'   # 修改字符编码
+>>> r.json()    # 可以正常显示汉字
+(4)传参
+>>> kd_url = 'http://www.kuaidi100.com/query'
+>>> kd_params = {'type': 'youzhengguonei', 'postid': '9893442769997'}
+>>> r = requests.get(kd_url, params=kd_params)
+>>> r.json()
+
+
+钉钉机器人：
+https://open-doc.dingtalk.com/docs/doc.htm?spm=a219a.7629140.0.0.karFPe&treeId=257&articleId=105735&docType=1
+
+
+itchat模块，可以实现接入微信
+https://www.jianshu.com/p/5d4de51f5375
+
+
+
+zabbix:
+中文手册页：https://www.zabbix.com/documentation/4.0/zh/manual
+API：Application Program Interface应用程序接口
+
+我的zabbix实例网站目录是http://192.168.4.2/zabbix，那么它的api地址是：
+http://192.168.4.2/zabbix/api_jsonrpc.php
+
+
+为了安全，zabbix很多操作是需要权限的。权限的获得可以通过用户名和密码得到令牌
+以后其他涉及到权限的操作，都需要使用令牌才能完成
+
+
+
+
+
+
+
+
+
+
