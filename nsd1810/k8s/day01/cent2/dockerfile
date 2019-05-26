@@ -1,3 +1,0 @@
-FROM centos
-RUN yum install -y httpd
-CMD ["/usr/sbin/apachectl", "-D", "FOREGROUND"]

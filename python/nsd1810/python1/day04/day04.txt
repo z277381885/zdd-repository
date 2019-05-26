@@ -1,0 +1,216 @@
+shutil模块
+>>> import shutil
+>>> fobj1 = open('/etc/hosts', 'rb')
+>>> fobj2 = open('/tmp/zhuji', 'wb')
+>>> shutil.copyfileobj(fobj1, fobj2)
+>>> fobj1.close()
+>>> fobj2.close()
+#####################################
+>>> shutil.copy('/etc/hosts', '/tmp/zj')   # cp
+>>> shutil.copy2('/etc/hosts', '/tmp/zj.txt')  # cp -p
+>>> shutil.copytree('/etc/security', '/tmp/anquan')  # cp -r
+>>> shutil.move('/tmp/anquan', '/var/tmp/')  # mv
+>>> shutil.rmtree('/var/tmp/anquan')   # rm -rf
+>>> import os
+>>> os.remove('/tmp/zhuji')   # 删单个文件
+
+#####################################
+>>> x = y = 10   # 链式多重赋值
+>>> a, b = 10, 20   # a = 10; b = 20
+>>> a, b = (100, 200)   # a = 100; b = 200
+>>> a, b = [1000, 2000]   # a = 1000; b = 2000
+>>> a, b = b, a    # a和b的值互换
+
+#####################################
+关键字：
+>>> import keyword
+>>> keyword.kwlist   # 关键字列表
+>>> 'pass' in keyword.kwlist
+>>> keyword.iskeyword('pass')
+内建：虽然不是关键字，但是也不应该使用，如len
+>>> len('abcd')
+4
+>>> len = 10
+>>> len('abcd')   # 报错，相当于是10('abcd')
+
+##############程序文件布局#######################
+#!/usr/local/bin/python3
+'文档字符串'
+
+import random    # 模块导入
+import string
+
+digits = '0123456789'   # 全局变量的定义
+
+class MyClass:     # 类定义
+    pass
+
+
+def myfunc():      # 函数定义
+    pass
+
+if __name__ == '__main__':
+    myfunc()
+#####################################
+pycharm重新格式化代码布局的方法：Code菜单 => Reformat code
+
+
+#####################################
+>>> alist = [10, 30, 20]
+>>> for ind in range(len(alist)):
+...     print('%s: %s' % (ind, alist[ind]))
+>>> enumerate(alist)
+>>> list(enumerate(alist))
+[(0, 10), (1, 30), (2, 20)]
+
+#####################################
+>>> list(reversed(alist))   # 翻转
+>>> for i in reversed(alist):
+...     print(i)
+>>> sorted(alist)    # 排序
+>>> sorted('sdflkj')   # 排序
+
+
+#####################################
+字符串属于：标量、不可变、顺序  类型
+
+
+#####################################
+>>> '%s is %s years old' % ('bob', 20)    => %s -> 使用str转换成字符
+>>> '%s is %d years old' % ('bob', 20)    => %d 表示int转换成整数
+>>> '%10s%8s' % ('name', 'age')   # %10s表示字段宽度为10，右对齐
+'      name     age'
+>>> '%10s%8s' % ('bob', 20)
+'       bob      20'
+>>> '%-10s%-8s' % ('name', 'age')   # %-10s表示字段宽度为10，左对齐
+'name      age     '
+>>> '%-10s%-8s' % ('bob', 20)
+'bob       20      '
+##################以下了解###################
+>>> '%s is %f years old' % ('bob', 20)    => %f -> float
+>>> 'buy apple, cost %5.2f' % 10.8   # %5.2表示总宽度是5，小数位为2
+'buy apple, cost 10.80'
+>>> '97 is %c' % 97    # 将ASCII码97转成相应的字符
+'97 is a'
+>>> '10 is %#o' % 10    # %#o  => 8进制
+'10 is 0o12'
+>>> '10 is %#x' % 10
+'10 is 0xa'
+>>> '%010d' % 25    # 25总10个宽度，不足部分用0补齐
+'0000000025'
+
+#####################################
+format方法与%s具有一样的功能，了解
+>>> '{} is {} years old'.format('bob', 20)
+'bob is 20 years old'
+>>> '{1} is {0} years old'.format(20, 'bob')
+'bob is 20 years old'
+>>> '{0[0]} is {0[1]} years old'.format(['bob', 20])
+'bob is 20 years old'
+>>> '{0[0]:10} is {0[1]:>8} years old'.format(['bob', 20])
+'bob        is       20 years old'
+
+
+#####################################
+python可以通过subprocess模块调用系统命令
+>>> subprocess.run(['ls', '-l', '/root'])
+>>> subprocess.run(['ls', '-l', '~'])   # 非shell环境，~被认为是文件名
+>>> subprocess.run('ls -l ~', shell=True)  # 在shell环境中执行
+>>> result = subprocess.run('ls -l /abc', shell=True)
+>>> result.returncode   # 相当于shell的$?，执行失败为非0值
+
+#####################################
+原始字符串
+>>> win_path = 'c:\temp\newdir'
+>>> print(win_path)
+c:	emp
+ewdir
+>>> win_path = 'c:\\temp\\newdir'
+>>> print(win_path)
+c:\temp\newdir
+# 字符串前加上r，字符串中所有字符表示本身意义，不会和其他字符组合成别的含义
+>>> wpath = r'c:\temp\newdir'
+>>> print(wpath)
+c:\temp\newdir
+>>> wpath
+'c:\\temp\\newdir'
+
+
+#####################################
+>>> hi = '  hao\t123     \n'
+>>> hi.strip()   # 删除两端空白字符，常用
+>>> hi.lstrip()
+'hao\t123     \n'
+>>> hi.rstrip()
+'  hao\t123'
+>>> hello.center(40)
+'              hello world               '
+>>> hello.center(40, '#')
+'##############hello world###############'
+>>> hello.ljust(40)
+>>> hello.rjust(40)
+
+>>> hello.upper()
+'HELLO WORLD'
+>>> 'HELLO'.lower()
+'hello'
+>>> hello.split()   # 使用空格作为分隔符切割，常用
+['hello', 'world']
+>>> 'hello.world.abc.ni hao'.split('.')   # 使用.作为分隔符切割
+['hello', 'world', 'abc', 'ni hao']
+>>> '---'.join(alist)    # 使用---列表中的字符串拼接，常用
+'hello---world---abc---ni hao'
+>>> hello.startswith('hello')   # 以hello开头吗，常用
+>>> hello.endswith('abc')   # 以abc结尾吗，常用
+>>> hello.replace('world', 'china')   # 替换
+>>> hello.islower()   # 字母是不是全是小写的
+
+
+#####################################
+列表：属于容器、可变、顺序 类型
+>>> alist = [10, 30, 25, 80, 100, 60]
+>>> alist.insert(2, 100)  # 在下标为2的位置加入100
+>>> alist.count(100)   # 统计100出现的次数
+>>> alist.index(100)   # 第一个100的下标
+>>> alist.remove(100)   # 删除第1个100
+>>> alist.pop()   # 默认弹出最后一个元素，常用
+>>> alist.pop(1)   # 将下标为1的元素弹出
+>>> alist.sort()   # 升序排列，常用
+>>> alist.reverse()   # 翻转，常用
+>>> blist = alist.copy()   # 拷贝alist的值给blist
+>>> alist.extend(['abc', 123])   # 将'abc'和123作为两项加入alist
+
+#####################################
+元组：属于容器、不可变、顺序 类型
+>>> atuple = (10, 20, 50, 30)
+>>> a = (10)   # 这时的a是数字，不是元组
+>>> type(a)
+<class 'int'>
+>>> a = (10,)   # 单元素元组也必须有个逗号
+>>> type(a)
+<class 'tuple'>
+>>> len(a)     # 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

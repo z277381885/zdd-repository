@@ -1,0 +1,89 @@
+.container {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.left {
+    float: left;
+    width: 100px;
+    height: 300px;
+    background: #bacedb;
+}
+
+.left ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+a.active {
+    color: white;
+    background: #555555;
+}
+
+.left ul a {
+    width: 68px;
+    display: block;
+    text-decoration: none;
+    padding: 8px 16px;
+    color: #000;
+    font-weight: bold;
+}
+.left ul a:hover {
+    color: #ffffff;
+    background: #555555;
+}
+
+.header ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+.header ul li {
+    float: left;
+}
+
+.header ul li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.header ul li a:hover {
+    background-color: #111;
+}
+
+.center {
+    font-size: 15pt;
+    font-weight: bold;
+    font-style: italic;
+    margin-left: 100px;
+    width: 600px;
+    height: 300px;
+    background: lightgrey;
+}
+
+.right {
+    float: right;
+    width: 300px;
+    height: 300px;
+    background: mediumpurple;
+    font-size: 15pt;
+    text-decoration: underline;
+    text-align: right;
+}
+
+.footer {
+    height: 150px;
+    background: lightgreen;
+}
+
+.header {
+    height: 150px;
+    background-image: url("http://i657.photobucket.com/albums/uu294/mavromatidis/skyblue1024x150.jpg");
+}

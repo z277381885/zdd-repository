@@ -1,0 +1,75 @@
+/*------------------------选择器------------------------------*/
+/*  通用选择器:*号匹配所有 */
+* {
+    font-size: 12pt;
+}
+
+/*类选择器:在class名称前加点,class可以理解为分组 */
+.g1{
+    color:green;
+}
+/*类选择器:有多个class=c1标签,只选择p类型块*/
+p.c1{
+    color: brown;
+}
+div.c1{
+    color: purple;
+}
+
+/*元素选择器:没有任何前缀的名字，表示元素*/
+body{
+    background: silver;
+    color: blue;
+}
+hr{
+    color: red;
+}
+/*id选择器:#开头,html中定义id=div3:<div class="g1"  id="div3">div3</div>
+          名称前加#，表示id*/
+#div3{
+    text-align: center;     /*居中*/
+}
+/*群组选择器:把多个选择器用逗号隔开,统一设置样式*/
+h1,h2{
+    background: coral;
+}
+/*伪类选择器:超链接样式设置*/
+a:link{             /*访问前*/
+    text-decoration: none;
+}
+a:hover{            /*鼠标悬停*/
+    font-size: 18pt;
+}
+a:visited{          /*访问后的状态*/
+    color: brown;
+}
+/*------------------------以上为选择器------------------------------*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

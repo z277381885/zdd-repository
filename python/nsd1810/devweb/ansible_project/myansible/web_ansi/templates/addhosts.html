@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}添加主机{% endblock %}
+{% block content %}
+{#    表单action是空的，表示提交数据时，提交到当前网址#}
+    <form action="" method="post" class="form-inline">
+    {% csrf_token %}   {% comment %}加上安全选项，因为settings.py中没有关闭安全功能{% endcomment %}
+        <div class="form-group">
+            <label>主机组：</label>
+            <input type="text" class="form-control" name="group">
+        </div>
+        <div class="form-group">
+            <label>主机：</label>
+            <input type="text" class="form-control" name="host">
+        </div>
+        <div class="form-group">
+            <label>IP地址：</label>
+            <input type="text" class="form-control" name="ip">
+        </div>
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" value="添 加">
+        </div>
+    </form>
+    <hr>
+    <table class="table table-bordered table-hover table-striped">
+        <tr class="info">
+            <td>主机组</td>
+            <td>主机</td>
+        </tr>
+        {% for group in groups %}
+            <tr>
+                <td>{{ group.group_name }}</td>
+                <td>
+                    <ul class="list-unstyled">
+                        {% for host in group.host_set.all %}
+                            <li>{{ host.hostname }}: {{ host.ipaddr }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

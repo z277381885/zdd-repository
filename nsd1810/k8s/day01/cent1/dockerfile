@@ -1,3 +1,0 @@
-FROM centos
-RUN echo 'hello world' > /root/hi.txt
-CMD echo 'abcd'

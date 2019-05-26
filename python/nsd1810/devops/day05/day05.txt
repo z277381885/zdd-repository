@@ -1,0 +1,137 @@
+语言分为：
+解释执行：shell/python/php
+编译执行：c/c++/go/java
+
+java => maven/ant编译 => war包
+
+CI/CD:持续集成/持续交付
+
+配置虚拟机以安装jenkins
+node4.tedu.cn  eth0: 192.168.4.4  eth1:选择nat模式，自动获取，可上网
+node4需配置好yum
+node1.tedu.cn  eth0: 192.168.4.1
+
+虚拟机上网配置：
+virt-manager -> 编辑 -> 连接详情 -> 虚拟网络 -> 激活default网络
+虚拟机eth1网卡，连接到default上之后，自动获取IP地址即可。改变网络连接需要重启
+虚拟机删除virbr0:
+# ifconfig virbr0 down
+# brctl delbr virbr0
+# nmtui添加eth1网卡，自动启动
+# ifup eth1
+
+
+
+配置jenkins：
+1、安装
+[root@node4 ~]# rpm -ihv jenkins-2.138.2-1.1.noarch.rpm
+[root@node4 ~]# yum install -y git
+2、初始化
+[root@node4 ~]# systemctl start jenkins
+[root@node4 ~]# systemctl enable jenkins
+http://192.168.4.4:8080 -> 输入密钥 -> 选择插件安装 -> 无 -> 不要新建管理员
+帐号，点击下面的“使用admin继续登陆” -> 保存并完成
+点击右上角admin -> 设置 -> 修改密码
+3、安装git parameter插件
+https://blog.csdn.net/you227/article/details/81076032
+在“可选插件”中安装git parameter -> 直接安装 -> 勾选安装完后重启jenkins
+
+
+
+程序开发、代码上线流程：
+一、程序员编写代码
+[root@room8pc16 ~]# git init /tmp/myweb
+[root@room8pc16 ~]# cd /tmp/myweb
+[root@room8pc16 myweb]# cat index.html
+<h1>My Web Site</h1>
+[root@room8pc16 myweb]# git add .
+[root@room8pc16 myweb]# git commit -m "myweb 1.0"
+[root@room8pc16 myweb]# git tag 1.0  # 标记1.0版本的程序
+[root@room8pc16 myweb]# git tag
+1.0
+[root@room8pc16 myweb]# cat index.html  # 继续开发
+<h1>My Web Site</h1>
+<h2>New line.</h2>
+[root@room8pc16 myweb]# git add .
+[root@room8pc16 myweb]# git commit -m "web web 2.0"
+[root@room8pc16 myweb]# git tag 2.0
+[root@room8pc16 myweb]# git tag
+1.0
+2.0
+二、在gitlab上创建项目
+1、在devops组下，创建一个名为myweb的共开项目
+2、为用户授权，使用户成为myweb项目的主程序员
+三、上传第一步的代码到gitlab
+[root@room8pc16 myweb]# cd /tmp/myweb/
+[root@room8pc16 myweb]# git remote rename origin old-origin
+[root@room8pc16 myweb]# git remote add origin http://192.168.4.1/devops/myeb.git
+[root@room8pc16 myweb]# git push -u origin --all
+[root@room8pc16 myweb]# git push -u origin --tags
+
+四、在jenkins上将web1.0下载下来
+1、基本下载
+首页 -> 新建任务 -> 任务名myweb(自由风格) -> 勾选参数化构建过程
+添加参数 选择git parameter(用于指定下载gitlab上软件的哪个版本) name填写myweb
+(就是自定义一个变量，将来软件版本号赋值给该变量); parameter tag选branch or tag;
+-> 源码管理选git; Repository url填写你的git路径 http://192.168.4.1/devops/myeb.git
+-> Branch specifier 填写$myweb(通过git parameter定义的) -> 保存
+2、运行工程，将会把代码从gitlab上下载到jenkins的/var/lib/jenkins/workspace目录
+点击工程 -> build with parameters -> 点击1.0版本 -> 开始构建
+
+五、在jenkins上部署web服务器
+jenkins下载的程序，最终是要部署到真正的应用服务器上。为了方便应用服务器下载，在
+jenkins上安装httpd
+1、安装
+[root@node4 ~]# yum install -y httpd
+[root@node4 ~]# systemctl start httpd
+[root@node4 ~]# systemctl enable httpd
+2、创建目录
+/var/www/html/deploy/packages  用于存储在gitlab上下载的软件包和md5值文件
+/var/www/html/deploy/  用于存储软件版本
+[root@node4 ~]# mkdir -pv /var/www/html/deploy/packages
+[root@node4 ~]# chown -R jenkins:jenkins /var/www/html/deploy/
+
+六、修改jenkins任务，将下载的代码放到httpd家目录下，打包
+1、修改
+点击工程 -> 配置 -> Additional Behavious 选checkout to a subdirectory
+(把下载的代码放到子目录中)，填写myweb-${myweb} -> 构建 -> 增加额外的构建步骤，
+选执行shell，填写以下内容：
+实现的功能是把下载的软件包拷贝到/var/www/html/deploy/packages中，并计算md5值，
+然后在/var/www/html/deploy记录软件的当前版本和上一版本
+deploy_dir=/var/www/html/deploy
+cp -r myweb-${myweb} $deploy_dir/packages
+cd $deploy_dir/packages
+rm -rf myweb-${myweb}/.git
+tar czf myweb-${myweb}.tar.gz myweb-${myweb}
+md5sum myweb-${myweb}.tar.gz | awk '{print $1}' > myweb-${myweb}.tar.gz.md5
+rm -rf myweb-${myweb}
+cd $deploy_dir
+[ -f livever ] && cat livever > lastver  # 把当前版本内容写到上一版本内容文件中
+echo ${myweb} > livever  # 更新当前版本文件的版本号
+2、验证
+[root@node4 ~]# rm -rf /var/lib/jenkins/workspace/*
+重新构建工程。构建完毕后，查看/var/www/html/deploy
+
+七、应用服务器下载代码并完成部署
+1、创建目录
+/var/www/download  用于存储下载的软件包
+/var/www/deploy    用于存储解压的软件包和软件版本信息
+2、部署思路
+将jenkins上的压缩软件包下载到/var/www/download目录，解压时，解压到/var/www/deploy
+目录，部署时在/var/www/html/创建nsd1810的链接，指向要发布的版本目录
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
