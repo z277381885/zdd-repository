@@ -39,6 +39,20 @@ tar -zcvf 		打包
 find /usr/local/backups -mtime +10 -name "*.*" -exec rm -rf {} \;
 
 find /io/data_backup/kkqb_backup/  -mtime +70    查找目录中70天前的文件
-----
+------------------
 /var/spool/cron    任务计划目录
+-------------------------
+jar命令
+压缩war包：
+把当前目录下的所有文件打包成game.war
+jar -cvfM0 game.war ./
+-c   创建war包
+-v   显示过程信息
+-f    
+-M
+-0   这个是阿拉伯数字，只打包不压缩的意思
+解压war包
+jar -xvf game.war   #解压到当前目录
+
+
 
