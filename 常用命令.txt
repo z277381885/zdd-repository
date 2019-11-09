@@ -1,10 +1,13 @@
+ps aux --sort -rss   查看进程情况，按占用内存大小排序
+
 lrzsz	xshell文件传输	上传文件：rz -E	下载文件：sz 文件目录
+-----------------------------
+[root@DB 00]# grep -w 20 /etc/services   查找端口为20的服务
 
+[root@DB 00]# grep -w ftp /etc/services  查找服务为ftp的端口
 
+------------------------------
 [root@fabric1 ~]# whereis java
-
-			
-[root@localhost local]# find / -type d -name gitlab
 ----------------------------------------------------------------------------------------
 du -ah 		#可统计出该目录下所有的文件大小与总大小
 -a : 列出所有的文件与目录容量，因为默认仅统计目录下面的文件量而已；
@@ -42,6 +45,14 @@ find /usr/local/backups -mtime +10 -name "*.*" -exec rm -rf {} \;
 find /io/data_backup/kkqb_backup/  -mtime +70    #查找目录中70天前的文件
 
 find . -type f | xargs grep -l 'abc'		#查找含有内容abc的所有文件
+
+find -type f -mtime -5 				#查找最近5天以前更改的文件
+find -type f -ctime -5 				#查找最近5天内更改过的文件
+find -type f -ctime 5 				#查找最近第5天更改过的文件
+find . -type f -perm 644 -exec ls -l {} \;	#查找文件有644权限的文件
+
+
+
 --------------------------------------------------------------------------------------------
 /var/spool/cron    任务计划目录
 --------------------------------------------------------------------------------------------
@@ -80,6 +91,84 @@ CertUtil: -hashfile 命令成功完成。
 
 [root@test ~]# systemctl list-units --type=service |grep jenkins	#查看开机自动启动有没有jenkins
 jenkins.service                 loaded active running LSB: Jenkins Automation Server
+
+
+shell中每个进程都和三个系统文件相关联，三个系统文件的文件描述符分别为0，1和2。
+0   标准输入stdin
+1   标准输出stdout
+2   标准错误stderr
+ 
+[root@orderer ~]# ./test.sh >test.log 		#默认是将1定向到日志文件
+./test.sh:行2: t: 未找到命令			#终端显示错误内容
+[root@orderer ~]# cat test.log 		
+2019年 08月 19日 星期一 09:05:37 CST		#日志记录的是正确的内容
+
+[root@orderer ~]# ./test.sh 1>test.log
+./test.sh:行2: t: 未找到命令			#描述符为：1（标准输出）   终端显示错误内容
+[root@orderer ~]# cat test.log 
+2019年 08月 19日 星期一 09:01:31 CST		#日志记录的是正确的内容 
+
+
+[root@orderer ~]# ./test.sh 2>test.log 
+2019年 08月 19日 星期一 09:01:42 CST		#描述符为：2（标准错误）   终端显示正确内容
+[root@orderer ~]# cat test.log 
+./test.sh:行2: t: 未找到命令			#日志记录的是错误的内容
+[root@orderer ~]# 
+
+
+[root@orderer ~]# ./test.sh 				#默认是正确错误都在终端显示
+./test.sh:行2: t: 未找到命令				#未定向到错误日志文件
+2019年 08月 19日 星期一 09:02:32 CST
+
+2>&1的意思就是将标准错误也输出到标准输出当中。
+[root@orderer ~]# ./test.sh >test.log 2>&1
+[root@orderer ~]# cat test.log 
+./test.sh:行2: t: 未找到命令
+2019年 08月 19日 星期一 09:08:38 CST
+
+也可以：1>&2的意思就是将标准输出也输出到标准错误当中。
+[root@orderer ~]# ./test.sh 2>test.log 1>&2
+[root@orderer ~]# cat test.log 
+./test.sh:行2: t: 未找到命令
+2019年 08月 19日 星期一 09:13:17 CST
+[root@orderer ~]# ./test.sh 2>test.log
+2019年 08月 19日 星期一 09:13:38 CST
+--------------------------------------------------------------------------------------
+[root@DB 241_backup]# netstat -ln |grep mysql			#寻找链接mysql正确的套接字文件
+unix  2      [ ACC ]     STREAM     LISTENING     10211  /var/lib/mysql57/mysql.sock
+
+----------------------
+:21,35s/^/#/ 
+
+----------------
+windows 查看端口
+netstat -aon|findstr 8081
+
+tasklist|findstr "2868"    查看ID是哪个程序的
+
+-------------------------------------------------------------------
+
+[zdd@localhost Shop-Cloud]$ date -d "-1 day" "+%Y%m%d"		#显示前一天的日期
+20190923
+[zdd@localhost Shop-Cloud]$ date -d "-2 day" "+%Y%m%d"		#显示前二天的日期
+20190922
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
