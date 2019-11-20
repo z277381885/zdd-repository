@@ -1,0 +1,408 @@
+235  jenkins、mysql测试
+236  mvn npm 等
+-----------------------------
+新同事相关账户开通：
+1、svn
+2、禅道
+3、gitlab（除了开发，其他不用）
+
+svn:
+https://192.168.10.240/svn/gxtz/     账号与密码：jiangbei/jiangbei
+
+日报路径：https://192.168.10.240/svn/gxtz/长华技术中心/日常工作/      #工作日报
+里面有模板参考
+
+禅道
+禅道地址
+:192.168.10.242:8811    账号与密码：jiangbei/jiangbei
+
+
+-------------
+91430104MA4L5DJ82J
+湖南省七财商业运营管理有限公司
+---------------------------------
+
+成功
+200 正常;请求已完成。
+201 正常;紧接POST命令。
+202 正常;已接受用于处理，但处理尚未完成。
+203 正常;部分信息 — 返回的信息只是一部分。
+204 正常;无响应 — 已接收请求，但不存在要回送的信息。
+重定向
+301 永久重定向 — 请求的数据具有新的位置且更改是永久的。
+302 暂时重定向 — 请求的数据临时具有不同URI。
+303 请参阅其它 — 可在另一URI下找到对请求的响应，且应使用 GET方法检索此响应。
+304 未修改 — 未按预期修改文档。
+305 使用代理 — 必须通过位置字段中提供的代理来访问请求的资源。
+306 未使用 — 不再使用;保留此代码以便将来使用。
+代码中的错误
+400 错误请求 — 请求中有语法问题，或不能满足请求。
+401 未授权 — 未授权客户机访问数据。
+402 需要付款 — 表示计费系统已有效。
+403 禁止— 即使有授权也不需要访问。
+404 找不到—服务器找不到给予的资源;文档不存在。
+406 不可接受 — 根据此请求中所发送的“接受”标题，此请求所标识的资源只能生成内容特征为“不可接受”的响应实体。
+407 代理认证请求 — 客户机首先必须使用代理认证自身。
+410 请求的网页不存在(永久);
+415 介质类型不受支持 —服务器拒绝服务请求，因为不支持请求实体的格式。
+500 内部错误 — 因为意外情况，服务器不能完成请求。
+501 未执行 —服务器不支持请求的工具。服务器不具备完成请求的功能。例如，服务器无法识别请求方法时可能会返回此代码。
+502 错误网关—服务器接收到来自上游服务器的无效响应。已经执行，但是由于某种原因而没有执行完毕，最终导致终止
+503 无法获得服务 — 由于临时过载或维护，服务器无法处理请求。
+504 （网关超时） 服务器作为网关或代理，但是没有及时从上游服务器收到请求。
+505 （HTTP 版本不受支持） 服务器不支持请求中所用的 HTTP 协议版本。
+
+
+-----------------------------------------------------------------
+服务器检查：
+
+
+free -h		#内存 内存占用率 = (used - buffers – cached) / total * 100%
+		total:总计物理内存的大小。
+		used:已使用多大。
+		free:可用有多少。
+		Shared:多个进程共享的内存总额。
+		Buffers/cached:磁盘缓存的大小。
+                available  可用的
+
+sar -P ALL 2 5  #CPU占用率=100%-%idle   每隔2s，对CPU占用采样，与预期不符或高于90%，则深究
+湖南省七财商业运营管理有限公司  
+91430104MA4L5DJ82J
+
+df -h 
+
+du -h --max-depth=1   查看文件大小，路径深度为1
+
+
+fdisk -l                #获取磁盘设备名列表
+smartctl -H /dev/sdX    #查看具体磁盘的健康状态
+     SMART overall-health self-assessment test result: PASSED   如果是FAILED表示不健康，需更换
+
+
+sar -u 1 3  每隔1秒获取1次CPU数据获取3次，
+	%user ? 用户空间的CPU使用
+
+
+	%nice ? 改变过优先级的进程的CPU使用率
+
+
+	%system ? 内核空间的CPU使用率
+
+
+	%iowait ? CPU等待IO的百分比，%iowait过高表示存在I/O瓶颈，即磁盘IO无法满足业务需求
+
+
+	%steal ? 虚拟机的虚拟机CPU使用的CPU
+
+
+	%idle ? 空闲的CPU
+
+，%idle过低表示CPU使用率比较严重，需要结合内存使用等情况判断CPU是否瓶颈
+
+
+sar -dp 2 5  每隔2秒获取一次磁盘数据获取5次
+	tps ?每秒I/O的传输总数
+
+
+	rd_sec/s ?每秒读取的扇区的总数
+
+
+	wr_sec/s ?每秒写入的扇区的总数
+
+	
+avgrq-sz ?平均每次次磁盘I/O操作的数据大小（扇区）
+
+
+	avgqu-sz ?磁盘请求队列的平均长度
+
+
+	await ?从请求磁盘操作到系统完成处理，每次请求的平均消耗时间，包括请求队列等待时间，单位是毫秒（1秒等于1000毫秒），等于寻道时间+队列时间+服务时间
+
+
+	svctm ?I/O的服务处理时间，即不包括请求队列中的时间
+
+
+	%util ?I/O请求占用的CPU百分比，值越高，说明I/O越慢
+-----------------------------------------------------------------------
+
+
+a47ee6ef42fc730e35be7586376fe428
+
+1. siy-eureka-server   注册中心
+2. siy-config-server   从配置仓库中取配置
+3. siy-api-gateway     api网关：8888
+
+4. siy-storage
+
+5. siy-pay
+
+6. siy-user
+
+7. siy-goods
+
+8. siy-order  订单服务
+9. siy-store  店铺
+10. siy-admin
+
+11. siy-wechat 
+
+-Penv-prod    构建时选择的环境   clean install -Penv-prod -Dmaven.test.skip=true
+				 clean install -Penv-dev -Dmaven.test.skip=true
+线上：
+商城店铺端：biz.shop.ylgx365.com
+
+商城平台端：admin.shop.ylgx365.com
+
+接口端：api.shop.ylgx365.com
+
+测试：
+云联商城管理系统：http://shopadmin.siyuanv.com/user/login
+云联店铺管理系统：http://shop.siyuanv.com/user/login
+
+   nohup java -jar $JAVA_OPTIONS_INITIAL $JAVA_OPTIONS_MAX $_JAR_KEYWORDS -Dfile.encoding=utf-8 --spring.profiles.active=dev >./siy-pay.log 2>&1 &
+
+
+$(ps -ef|grep siy-admin-ui|grep -v grep|awk '{print $2}')
+
+cd /home/siy/shop-admin/siy-admin-ui/
+npm install
+npm run build
+nohup npm start &
+
+http://192.168.10.235:8080/job/vote-stage/build?token=a47ee6ef42fc730e35be7586376fe428
+
+http://192.168.10.242:8822/job/test-Shop-Admin/build?token=zdd20190902
+
+http://192.168.10.242:8822/job/test-SiY-Cloud/build?token=zdd20190903siy-cloud
+
+http://192.168.10.242:8822/job/test-Shop-Cloud/build?token=zdd20190903shop-cloud
+
+http://192.168.10.242:8822/job/test-Shop-Cloud-dev/build?token=zdd20190909test-shop-Cloud-dev
+
+route1906
+
+
+clean install -Denv=prod -Dmaven.test.skip=true
+
+clean install -P test -Dmaven.test.skip=true
+
+云联商城的jenkins环境都是dev环境，不要指定test
+
+http://192.168.10.240:8822/job/test-Shop-Cloud-dev/build?token=20191015-test-tijian-h5-web
+http://192.168.10.240:8822/job/test-tijian-h5-web/build?token=20191015-test-tijian-h5-web
+http://192.168.10.240:8822/job/test-tijian-h5-web/build?token=tijian-h5-web---test
+JENKINS_URL/job/test-tijian-h5-web/build?token=TOKEN_NAME
+---------------------------------------------------------------------------
+
+
+2>&1 表示不仅命令行正常的输出保存到指定文件中，产生错误信息的输出也保存到指定文件中；
+& 表示该进程在后台运行；
+nohup表示进程在当用户注销（logout）或者网络断开时不会被终止。
+
+
+1.想要把make输出的全部信息，输出到某个文件中，最常见的办法就是：
+make xxx > build_output.txt
+此时默认情况是没有改变2=stderr（标准错误）的输出方式，还是屏幕，所以，如果有错误信息，还是可以在屏幕上看到的。
+2.只需要把make输出中的错误（及警告）信息输出到文件中ing，可以用：
+make xxx 2> build_output.txt
+相应地，由于1=stdout（标准输出）没有变，还是屏幕，所以，那些命令执行时候输出的正常信息，还是会输出到屏幕上，你还是可以在屏幕上看到的。
+3.只需要把make输出中的正常（非错误，非警告）的信息输出到文件中，可以用：
+make xxx 1> build_output.txt
+相应地，由于2=stderr没有变，还是屏幕，所以，那些命令执行时候输出的错误信息，还是会输出到屏幕上，你还是可以在屏幕上看到的。
+4.想要把正常输出信息和错误信息输出到分别的文件中，可以用：
+make xxx 1> build_output_normal.txt 2>build_output_error.txt
+即联合使用了1和2，正常信息和错误信息，都输出到对应文件中了。
+5. 所有的信息都输出到同一个文件中：
+make xxx > build_output_all.txt 2>&1
+其中的2>&1表示错误信息输出到&1中，而&1，指的是前面的那个文件：build_output_all.txt 。
+注意：上面所有的1,2等数字，后面紧跟着大于号'>' ，中间不能有空格。
+
+------------------------------------
+$0: 脚本本身文件名称
+$1: 命令行第一个参数，$2为第二个，以此类推
+$*: 所有参数列表
+$@: 所有参数列表
+$#: 参数个数
+$$: 脚本运行时的PID
+$?: 脚本退出码
+-------------------------------------------------
+
+将 eth0 的最大下载/上传带宽分别设定为 1000Kbit/s 和 500Kbit/s:
+
+1M=1024KB  1B=8bit  1M=1024*8kbits
+
+1M=1024k
+1Byte=8bit
+1MB/s=8Mbit/s=8192kbit/s
+
+Bit意为“位”或“比特”，是计算机运算的基础，属于二进制的范畴；
+Byte意为“字节”，是计算机文件大小的基本计算单位；
+换算： 
+1 Byte字节 = 8 Bits位 
+       
+1 KB = 1024 Bytes 
+
+       1 MB = 1024 KB 
+
+       1 GB = 1024 MB 
+
+
+byte 简写为B，
+bit  简写为b；
+1B=8b； 
+一个数字与一个字母都是占1B；一个汉字占两个字节； 
+
+
+1MB可以存1204个数字或字母(不分大小写)。
+-------------------------------------------------------------
+
+
+
+
+
+
+test-jsb 
+clean install -Denv=test -Dmaven.test.skip=true
+prod-jsb
+clean install -Denv=prod -Dmaven.test.skip=true
+
+
+prod-ylgx
+clean install -Denv=prod -Dmaven.test.skip=true
+test-ylgx
+clean install -Denv=test -Dmaven.test.skip=true
+
+
+
+siy-cloud
+clean install -P test -Dmaven.test.skip=true
+
+
+
+命令行：
+mvn -DpropertyName=propertyValue clean package
+如果propertyName不存在pom.xml，它将被设置。
+如果propertyName已经存在pom.xml，其值将被作为参数传递的值覆盖-D。
+如果要发送多个变量，请使用多个空格分隔符加-D：
+
+mvn -DpropA=valueA -DpropB=valueB -DpropC=valueC clean package
+
+
+
+test-Shop-Cloud-dev-243
+
+dev 只构建不部署服务
+http://192.168.10.245/SiY/Shop/Shop-Cloud.git
+
+*/dev
+
+zdd20190909test-shop-Cloud-dev
+zdd20190911test-shop-Cloud-dev
+
+pom.xml
+clean install -P test -Dmaven.test.skip=true
+
+zhao@kkqb.cn,635518693@qq.com
+
+
+
+scp -r /home/jenkins/workspace/test-Shop-Cloud-dev-243 192.168.10.236:/home/242_build
+
+
+svn:
+https://192.168.10.240/svn/gxtz/     账号与密码：heshengniu/heshengniu
+日报路径：https://192.168.10.240/svn/gxtz/长华技术中心/日常工作/	工作日报
+里面有模板参考
+
+gitlab地址
+:192.168.10.245        账号与密码：heshengniu/heshengniu
+
+禅道地址
+:192.168.10.242:8811    账号与密码：heshengniu/heshengniu
+		
+-------------------------
+
+#LANG="zh_CN.GBK"
+#SUPPORTED="zh_CN.UTF-8:zh_CN:zh"
+#SYSFONT="latarcyrheb-sun16"
+LANG="zh_CN.UTF-8"
+#SUPPORTED="zh_CN.UTF-8:zh_CN:zh"
+SYSFONT="lat0-sun16"
+
+LANGUAGE="zh_CN.GB18030:zh_CN.GB2312:zh_CN"
+SUPPORTED="zh_CN.UTF-8:zh_CN:zh:en_US.UTF-8:en_US:en"
+
+
+
+
+http://192.168.10.236:5601/status
+
+17807312324 
+
+
+pscp -i F:\Users\Administrator\240privatekey.ppk -r E:\jenkins\workspace\test-tijian-h5-web\h5\dist root@192.168.10.242:/usr/local/nginx/tj
+
+
+E:\jenkins\workspace\test-tijian-h5-web\h5>setx PATH " %PATH%;F:\Users\Administrator\AppData\Roaming\npm\node_modules\n\bin\n"
+
+E:\Xshell 6\;F:\ProgramData\Oracle\Java\javapath;F:\Program Files (x86)\Common Files\Oracle\Java\javapath;F:\Program Files (x86)\Windows Resource Kits\Tools\;%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem;%SYSTEMROOT%\System32\WindowsPowerShell\v1.0\;F:\Program Files\TortoiseSVN\bin;%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin;%MAVEN_HOME%\bin;%CATALINA_HOME%\lib; %CATALINA_HOME%\lib\servlet-api.jar;%CATALINA_HOME%\lib\jsp-api.jar;F:\Program Files\nodejs\;E:\TortoiseGit\bin;F:\Program Files (x86)\IDM Computer Solutions\UltraEdit;E:\Program Files (x86)\VisualSVN Server\bin\;E:\Program Files (x86)\VisualSVN Server\bin;E:\Program Files\Git\cmd;F:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\
+
+
+%N_HOME%;E:\Xshell 6\;F:\ProgramData\Oracle\Java\javapath;F:\Program Files (x86)\Common Files\Oracle\Java\javapath;F:\Program Files (x86)\Windows Resource Kits\Tools\;%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem;%SYSTEMROOT%\System32\WindowsPowerShell\v1.0\;F:\Program Files\TortoiseSVN\bin;%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin;%MAVEN_HOME%\bin;%CATALINA_HOME%\lib; %CATALINA_HOME%\lib\servlet-api.jar;%CATALINA_HOME%\lib\jsp-api.jar;F:\Program Files\nodejs\;E:\TortoiseGit\bin;F:\Program Files (x86)\IDM Computer Solutions\UltraEdit;E:\Program Files (x86)\VisualSVN Server\bin\;E:\Program Files (x86)\VisualSVN Server\bin;E:\Program Files\Git\cmd;F:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\
+
+cd E:\jenkins\workspace\test-tijian-h5-web\h5
+npm run build:h5
+
+pscp -i F:\Users\Administrator\240privatekey.ppk -r E:\jenkins\workspace\test-tijian-h5-web\h5\dist root@192.168.10.242:/usr/local/nginx/tj
+
+
+db1 续费一年：9363.6元        
+db2 续费一年：9363.6元        
+server1 续费一年：5290.80元   
+年前续费总计：27843元
+
+账户余额：14717.29
+年前相差：13125.71元
+
+
+年前+年后续费总计：
+
+四台云服务器同时续费一年：29308.8元
+
+pscp -i F:\Users\Administrator\240privatekey.ppk -r E:\jenkins\workspace\prod-tijian-h5-web\h5\dist root@172.16.148.22:/usr/local/nginx/tj
+
+pscp -i F:\Users\Administrator\240privatekey.ppk -r E:\jenkins\workspace\prod-tijian-h5-web\h5\dist root@172.16.148.23:/usr/local/nginx/tj
+
+
+jenkins新建测试用户：web/web123456
+
+clean install  -P test -Dmaven.test.skip=true
+
+
+no
+chit-hotelmachine
+chit-rest
+gxsh-rpc-service
+chit-web
+chit-xzz
+
+if %project1% == chit-hotelmachine (pscp -i F:\Users\Administrator\240privatekey.ppk E:\jenkins\workspace\test-ylgx\gxsh-parent\chit-hotelmachine-rest\target\chit-hotelmachine-rest-1.0.0-SNAPSHOT.jar root@192.168.10.243:/io/ylgx_test/backup) else (echo no chit-hotelmachine )
+
+if %project1% == chit-rest (pscp -i F:\Users\Administrator\240privatekey.ppk E:\jenkins\workspace\test-ylgx\gxsh-parent\chit-rest\target\chit-rest-1.0.0-SNAPSHOT.jar root@192.168.10.243:/io/ylgx_test/backup) else (echo no chit-rest )
+
+if %project1% == chit-web (pscp -i F:\Users\Administrator\240privatekey.ppk E:\jenkins\workspace\test-ylgx\gxsh-parent\chit-web\target\chit-web-1.0.0-SNAPSHOT.jar root@192.168.10.243:/io/ylgx_test/backup) else (echo no chit-web )
+
+if %project1% == chit-xzz (pscp -i F:\Users\Administrator\240privatekey.ppk E:\jenkins\workspace\test-ylgx\gxsh-parent\chit-xzz-rest\target\chit-xzz-rest-1.0.0-SNAPSHOT.jar root@192.168.10.243:/io/ylgx_test/backup) else (echo no chit-xzz-rest )
+
+if %project1% == gxsh-rpc-service (pscp -i F:\Users\Administrator\240privatekey.ppk E:\jenkins\workspace\test-ylgx\gxsh-parent\chit-service\chit-service-rpc-service\target\gxsh-rpc-service-assembly.tar.gz root@192.168.10.243:/io/ylgx_test/backup) else (echo no chit-service-rpc-service )
+
+
+	
+ybngkqv9ai6tyoipet4evqqibj0wymsk.aliyundunwaf.com
+
+弹性公网IP:116.62.199.266  id:eip-bp1qe9ww871350p4f4o2t 绑定在db1(i-bp1e9bjg74lkez7bu9zy) 5M 续费：1275/年
+
+专有网络：172.16.0.0/16    id:vpc-bp1pcrmzzsdn8bj4b6qlk  
+交 换 机：172.16.144.0/20  id:vsw-bp1q8rxowaxpbutielcxs 
+
+
