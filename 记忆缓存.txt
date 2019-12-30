@@ -405,4 +405,6 @@ ybngkqv9ai6tyoipet4evqqibj0wymsk.aliyundunwaf.com
 专有网络：172.16.0.0/16    id:vpc-bp1pcrmzzsdn8bj4b6qlk  
 交 换 机：172.16.144.0/20  id:vsw-bp1q8rxowaxpbutielcxs 
 
+pscp -i F:\Users\Administrator\240privatekey.ppk -r E:\jenkins\workspace\test-shop-cloud-webadmin\siy-pc\dist root@192.168.10.242:/usr/local/nginx/shop-cloud/
+
 
