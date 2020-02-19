@@ -408,3 +408,14 @@ ybngkqv9ai6tyoipet4evqqibj0wymsk.aliyundunwaf.com
 pscp -i F:\Users\Administrator\240privatekey.ppk -r E:\jenkins\workspace\test-shop-cloud-webadmin\siy-pc\dist root@192.168.10.242:/usr/local/nginx/shop-cloud/
 
 
+
+.;%JAVA_HOME%\lib;%JAVA_HOME%\lib\tools.jar
+
+%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin;
+
+%N_HOME%;E:\Xshell 6\;F:\ProgramData\Oracle\Java\javapath;F:\Program Files (x86)\Common Files\Oracle\Java\javapath;F:\Program Files (x86)\Windows Resource Kits\Tools\;%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem;%SYSTEMROOT%\System32\WindowsPowerShell\v1.0\;F:\Program Files\TortoiseSVN\bin;%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin;%MAVEN_HOME%\bin;%CATALINA_HOME%\lib; %CATALINA_HOME%\lib\servlet-api.jar;%CATALINA_HOME%\lib\jsp-api.jar;E:\TortoiseGit\bin;F:\Program Files (x86)\IDM Computer Solutions\UltraEdit;E:\Program Files (x86)\VisualSVN Server\bin\;E:\Program Files (x86)\VisualSVN Server\bin;E:\Program Files\Git\cmd;F:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;F:\Program Files\nodejs\
+
+
+
+
+%JAVA_HOME2%\bin;
