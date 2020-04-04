@@ -1,0 +1,26 @@
+chrome		浏览器	
+potplayer  	媒体播放软件  	https://potplayer.daum.net/?lang=zh_CN
+wps		办公软件
+teamviewer	远程控制软件
+bandzip		解压软件6.26版本之后
+火绒		杀毒软件
+adguard		广告拦截软件
+everything	本地搜索软件	https://www.voidtools.com/zh-cn/
+wallpaper engine	桌面美化软件
+bandicam		录屏软件		十分钟以内免费
+resilio sync	同步软件：	https://www.resilio.com/
+snipaste		截图软件
+ditto		剪切板软件
+Abbyy		OCR软件，文字识别工具（收费）
+天若		OCR软件，文字识别工具（国产部分收费）
+kiftd		私有云盘，可代替U盘使用
+空		桌面翻译软件
+IDM		下载软件			http://www.internetdownloadmanager.com/
+TranslucentTB	windows工具栏透明		http://www.zlcode.pub/download/TranslucentTB.exe
+Q-Dir		文件夹多窗口整理工具	https://www.softwareok.com/?Freeware/Q-Dir		翻墙下载
+
+工作工具推荐：
+MobaXterm	ssh工具
+
+
+	
